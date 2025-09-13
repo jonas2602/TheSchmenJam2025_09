@@ -23,7 +23,7 @@ func _process(delta):
 
 func _init_rotation(delta_degrees : float):
 	target_rotation    = target_rotation + delta_degrees
-	print("new target: %f" % (target_rotation))
+	# print("new target: %f" % (target_rotation))
 
 func _on_timer_timeout():
 	var delta_degrees : float = randf_range(-180.0, 180.0)
@@ -33,3 +33,21 @@ func _on_timer_timeout():
 	$Timer.set_wait_time(rotation_delay_active)
 	
 	pass
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	print("hit area: " + area.get_parent().name)
+
+
+func _on_area_2d_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	# print("hit area shape: %s, %d, %d" % [area.name, area_shape_index, local_shape_index])
+	pass # Replace with function body.
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	# print("hit body: " + body.name)
+	pass # Replace with function body.
+
+
+func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	# print("hit body shape: %s, %d, %d" % [body.name, body_shape_index, local_shape_index])
+	pass # Replace with function body.

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bc8x3iek1kqr5"]
 
-[ext_resource type="Script" path="res://scripts/guard_controller.gd" id="1_k8le7"]
+[ext_resource type="Script" uid="uid://6ptruw61t113" path="res://scripts/guard_controller.gd" id="1_k8le7"]
 [ext_resource type="Texture2D" uid="uid://dalwuqko6rorx" path="res://assets/GuardFace.png" id="2_t148x"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_ssob5"]
@@ -17,6 +17,14 @@ rotation = 1.5708
 scale = Vector2(250, 250)
 mesh = SubResource("PrismMesh_ssob5")
 
+[node name="Area2D" type="Area2D" parent="ViewFrustum"]
+position = Vector2(1.64912e-06, 0.45556)
+rotation = -1.5708
+scale = Vector2(0.004, 0.004)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ViewFrustum/Area2D"]
+polygon = PackedVector2Array(-13, 1, 238, 124, 239, -124)
+
 [node name="Face" type="MeshInstance2D" parent="."]
 scale = Vector2(78.189, 78.189)
 mesh = SubResource("QuadMesh_yv025")
@@ -25,4 +33,8 @@ texture = ExtResource("2_t148x")
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[connection signal="area_entered" from="ViewFrustum/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_shape_entered" from="ViewFrustum/Area2D" to="." method="_on_area_2d_area_shape_entered"]
+[connection signal="body_entered" from="ViewFrustum/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_shape_entered" from="ViewFrustum/Area2D" to="." method="_on_area_2d_body_shape_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
