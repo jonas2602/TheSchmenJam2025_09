@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp2tpbopcdqhp"
-path="res://.godot/imported/Tile_Top_Right_In.png-cb25a5b9d6ccbbfa156891da4b534be6.ctex"
+uid="uid://dqem20ues78gw"
+path="res://.godot/imported/Vehicle_Truck.png-afdf990617b6d2cae6c77d69734b16f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiles/Tile_Top_Right_In.png"
-dest_files=["res://.godot/imported/Tile_Top_Right_In.png-cb25a5b9d6ccbbfa156891da4b534be6.ctex"]
+source_file="res://assets/Vehicle_Truck.png"
+dest_files=["res://.godot/imported/Vehicle_Truck.png-afdf990617b6d2cae6c77d69734b16f2.ctex"]
 
 [params]
 

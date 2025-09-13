@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1n7r36qkopqq"
-path="res://.godot/imported/Tile_Add_River_Corner.png-4cf7f0c5b0a731b19bc92a36643786cc.ctex"
+uid="uid://b535elwsdi8d8"
+path="res://.godot/imported/Flag_Blue_Frame1.png-629f8539ce4902ced1a7eedcc5e6b48e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiles/Tile_Add_River_Corner.png"
-dest_files=["res://.godot/imported/Tile_Add_River_Corner.png-4cf7f0c5b0a731b19bc92a36643786cc.ctex"]
+source_file="res://assets/Flag/Flag_Blue_Frame1.png"
+dest_files=["res://.godot/imported/Flag_Blue_Frame1.png-629f8539ce4902ced1a7eedcc5e6b48e.ctex"]
 
 [params]
 

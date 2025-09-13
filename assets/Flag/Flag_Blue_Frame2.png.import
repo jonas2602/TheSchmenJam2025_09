@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bixo5ywoksuvq"
-path="res://.godot/imported/Tile_Top.png-9c68e01b9e055ac93e768164bddf56ec.ctex"
+uid="uid://dp6y61eskk6tq"
+path="res://.godot/imported/Flag_Blue_Frame2.png-11963b3462a2a3f51943ec86c7fe2157.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiles/Tile_Top.png"
-dest_files=["res://.godot/imported/Tile_Top.png-9c68e01b9e055ac93e768164bddf56ec.ctex"]
+source_file="res://assets/Flag/Flag_Blue_Frame2.png"
+dest_files=["res://.godot/imported/Flag_Blue_Frame2.png-11963b3462a2a3f51943ec86c7fe2157.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t3lpqjc8w2fa"
-path="res://.godot/imported/Tile_Left.png-d0db269265935960a93771cac5887627.ctex"
+uid="uid://catqsfwledpm4"
+path="res://.godot/imported/Flag_Blue_Frame3.png-4f8acc6a613688dfe892daf248a63d63.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiles/Tile_Left.png"
-dest_files=["res://.godot/imported/Tile_Left.png-d0db269265935960a93771cac5887627.ctex"]
+source_file="res://assets/Flag/Flag_Blue_Frame3.png"
+dest_files=["res://.godot/imported/Flag_Blue_Frame3.png-4f8acc6a613688dfe892daf248a63d63.ctex"]
 
 [params]
 
