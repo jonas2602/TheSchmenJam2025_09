@@ -71,7 +71,7 @@ func _is_border_tile(cell_pos : Vector2i, other_faction_id : int, other_faction_
 	if (cell_faction_id != faction_id_down && faction_id_down != faction_id_neutral && ((faction_id_down == other_faction_id) == other_faction_match)):
 		return true
 	
-	var faction_id_left = _get_cell_faction(cell_pos + Vector2i(1, 0))
+	var faction_id_left = _get_cell_faction(cell_pos + Vector2i(-1, 0))
 	if (cell_faction_id != faction_id_left && faction_id_left != faction_id_neutral && ((faction_id_left == other_faction_id) == other_faction_match)):
 		return true
 	
@@ -139,7 +139,7 @@ func _input(event : InputEvent):
 
 		var cell_pos : Vector2i = occupation_layer.local_to_map(_mouse_to_local(event.position))
 		if (cell_pos != GlobalEventSystem.hovered_tile_pos):
-			print("Tile ", cell_pos, " is hovered")
+			print("Tile ", cell_pos, " from faction ", _get_cell_faction(cell_pos), " is hovered" )
 			_update_hovered_tile(GlobalEventSystem.hovered_tile_pos, cell_pos)
 			GlobalEventSystem.hovered_tile_changed.emit(cell_pos)
 	pass
@@ -192,7 +192,8 @@ func _conquer_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	interaction_layer.set_cell(attack_target_pos, -1)
 	
 	var faction_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(attack_origin_pos)
-	occupation_layer.set_cell(attack_target_pos, 0, faction_atlas_coords)
+	var faction_source_id    : int      = occupation_layer.get_cell_source_id(attack_origin_pos)
+	occupation_layer.set_cell(attack_target_pos, faction_source_id, faction_atlas_coords)
 	
 	GlobalEventSystem.conquered_tile.emit(attack_target_pos)
 	
