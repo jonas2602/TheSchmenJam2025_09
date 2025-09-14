@@ -136,11 +136,8 @@ func _input(event : InputEvent):
 	# need to detect mouse over
 	if event is InputEventMouseMotion:
 		#print("Mouse is at: ", event.position)
-		var topLeft := Vector2(0, 0);
-		if get_viewport().get_camera_2d():
-			topLeft = get_viewport().get_camera_2d().position - get_viewport_rect().size / 2;
-		
-		var cell_pos : Vector2i = occupation_layer.local_to_map(event.position + topLeft)
+
+		var cell_pos : Vector2i = occupation_layer.local_to_map(_mouse_to_local(event.position))
 		if (cell_pos != GlobalEventSystem.hovered_tile_pos):
 			print("Tile ", cell_pos, " is hovered")
 			_update_hovered_tile(GlobalEventSystem.hovered_tile_pos, cell_pos)
@@ -149,7 +146,7 @@ func _input(event : InputEvent):
 	
 	var is_left_click_pressed : bool = event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT
 	if is_left_click_pressed:
-		var cell_pos : Vector2i = occupation_layer.local_to_map(event.position)
+		var cell_pos : Vector2i = occupation_layer.local_to_map(_mouse_to_local(event.position))
 		_update_attack_tiles(cell_pos)
 
 		# emit tile click event
@@ -159,6 +156,14 @@ func _input(event : InputEvent):
 		pass
 	pass
 
+func _mouse_to_local(mouse_pos : Vector2):
+	# todo need to handle the pos
+	var top_left := Vector2(0, 0)
+	var cam : Camera2D = get_viewport().get_camera_2d()
+	if cam:
+		top_left = cam.position - get_viewport_rect().size / 2;
+		
+	return top_left + mouse_pos
 
 func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	interaction_layer.set_cell(attack_origin_pos, 0, atlas_coords_active_attack_self, 0)
