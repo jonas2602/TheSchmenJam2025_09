@@ -1,5 +1,7 @@
 extends Camera2D
 
+# from https://github.com/cng6sk/Godot-TopDown-Camera2d/blob/main/addons/TopDownCamera2D/top_down_camera_2d.gd with modifications
+
 @onready var camera : Camera2D = self
 
 #region Exported
@@ -9,6 +11,11 @@ extends Camera2D
 @export var zoom_in_input : String = "zoomIn"
 @export var zoom_out_input : String = "zoomOut"
 @export var zoom_follow_cursor : bool = true
+
+@export var pan_up_input: String = "pan_up"
+@export var pan_down_input: String = "pan_down"
+@export var pan_left_input: String = "pan_left"
+@export var pan_right_input: String = "pan_right"
 
 @export_range(100, 2000, 10) var pan_speed: float = 1000.0
 @export_range(1, 20, 0.01) var max_zoom_level : float = 1.5
@@ -89,6 +96,21 @@ func _process(delta: float) -> void:
 		if is_in_edge_area && !is_outside:
 			scroll_direction = (mouse_pos - screen_center).normalized()
 			target_position += scroll_direction * edge_scroll_speed * delta
+
+	# Keyboard Movement
+	var keyboard_pan_direction := Vector2.ZERO
+	if Input.is_action_pressed(pan_left_input):
+		keyboard_pan_direction.x -= 5.0
+	if Input.is_action_pressed(pan_right_input):
+		keyboard_pan_direction.x += 5.0
+	if Input.is_action_pressed(pan_up_input):
+		keyboard_pan_direction.y -= 5.0
+	if Input.is_action_pressed(pan_down_input):
+		keyboard_pan_direction.y += 5.0
+
+	if keyboard_pan_direction != Vector2.ZERO:
+		keyboard_pan_direction = keyboard_pan_direction.normalized()
+		target_position += keyboard_pan_direction * pan_speed * delta
 
 	var pre_mouseZoom_posGlobal := get_canvas_transform().affine_inverse().basis_xform(zoom_mouse_pos)
 	camera.zoom = camera.zoom * zoom_interpolation + (1.0 - zoom_interpolation) * target_zoom
