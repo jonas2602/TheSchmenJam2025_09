@@ -17,15 +17,13 @@ const atlas_coords_selected_other : Vector2i = Vector2i( 9, 5)
 const atlas_coords_active_attack_self  : Vector2i = Vector2i(11, 6)
 const atlas_coords_active_attack_other : Vector2i = Vector2i( 9, 6)
 
-const faction_id_neutral : int = -1
-
 var attack_cell_origin : Vector2i = GlobalEventSystem.invalid_tile_pos
 var attack_cell_target : Vector2i = GlobalEventSystem.invalid_tile_pos
 
 func _get_cell_faction(cell_pos : Vector2i) -> int:
 	var cell_data : TileData = occupation_layer.get_cell_tile_data(cell_pos)
 	if (cell_data == null):
-		return faction_id_neutral # cell is not marked up for a faction
+		return GlobalEventSystem.faction_id_neutral # cell is not marked up for a faction
 	
 	var faction_id : int = cell_data.get_custom_data("faction_id")
 	return faction_id
@@ -45,7 +43,7 @@ func _update_hovered_tile(old_cell_pos : Vector2i, new_cell_pos : Vector2i) -> v
 	
 	var new_cell_faction : int = _get_cell_faction(new_cell_pos)
 	var hovered_atlas_coords : Vector2i = atlas_coords_hovered_self
-	if (new_cell_faction == faction_id_neutral):
+	if (new_cell_faction == GlobalEventSystem.faction_id_neutral):
 		hovered_atlas_coords = atlas_coords_hovered_neutral # hovered cell is not marked up for a faction
 	elif (new_cell_faction != self_faction_id):
 		hovered_atlas_coords = atlas_coords_hovered_other # hovered cell is occupied by an enemy faction
@@ -64,25 +62,25 @@ func _is_border_tile(cell_pos : Vector2i, other_faction_id : int, other_faction_
 	var cell_faction_id : int = _get_cell_faction(cell_pos)
 	
 	var faction_id_right = _get_cell_faction(cell_pos + Vector2i(1, 0))
-	if (cell_faction_id != faction_id_right && faction_id_right != faction_id_neutral && ((faction_id_right == other_faction_id) == other_faction_match)):
+	if (cell_faction_id != faction_id_right && faction_id_right != GlobalEventSystem.faction_id_neutral && ((faction_id_right == other_faction_id) == other_faction_match)):
 		return true
 	
 	var faction_id_down = _get_cell_faction(cell_pos + Vector2i(0, 1))
-	if (cell_faction_id != faction_id_down && faction_id_down != faction_id_neutral && ((faction_id_down == other_faction_id) == other_faction_match)):
+	if (cell_faction_id != faction_id_down && faction_id_down != GlobalEventSystem.faction_id_neutral && ((faction_id_down == other_faction_id) == other_faction_match)):
 		return true
 	
 	var faction_id_left = _get_cell_faction(cell_pos + Vector2i(-1, 0))
-	if (cell_faction_id != faction_id_left && faction_id_left != faction_id_neutral && ((faction_id_left == other_faction_id) == other_faction_match)):
+	if (cell_faction_id != faction_id_left && faction_id_left != GlobalEventSystem.faction_id_neutral && ((faction_id_left == other_faction_id) == other_faction_match)):
 		return true
 	
 	var faction_id_up = _get_cell_faction(cell_pos + Vector2i(0, -1))
-	if (cell_faction_id != faction_id_up && faction_id_up != faction_id_neutral && ((faction_id_up == other_faction_id) == other_faction_match)):
+	if (cell_faction_id != faction_id_up && faction_id_up != GlobalEventSystem.faction_id_neutral && ((faction_id_up == other_faction_id) == other_faction_match)):
 		return true
 	return false
 
 func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 	var cell_faction : int = _get_cell_faction(new_cell_pos)
-	if (cell_faction == faction_id_neutral):
+	if (cell_faction == GlobalEventSystem.faction_id_neutral):
 		return
 	
 	# reset attack tiles when selecting them again
