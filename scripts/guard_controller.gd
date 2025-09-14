@@ -12,7 +12,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var self_tile_pos : Vector2i = game_map._get_cell_pos_from_world_pos(self.position)
+	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
 	self_faction_id = game_map._get_cell_faction(self_tile_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
