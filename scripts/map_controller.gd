@@ -23,6 +23,7 @@ var attack_cell_target : Vector2i = GlobalEventSystem.invalid_tile_pos
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
+	GlobalEventSystem.player_conquer_stopped.connect(_on_conquer_aborted)
 	pass
 
 func _get_coords_for_world_pos(world_pos : Vector2) -> Vector2i:
@@ -201,5 +202,10 @@ func _on_conquered_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector
 	var faction_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(attack_origin_pos)
 	var faction_source_id    : int      = occupation_layer.get_cell_source_id(attack_origin_pos)
 	occupation_layer.set_cell(attack_target_pos, faction_source_id, faction_atlas_coords)
+	pass
+
+func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+	interaction_layer.set_cell(attack_origin_pos, -1)
+	interaction_layer.set_cell(attack_target_pos, -1)
 	
 	pass
