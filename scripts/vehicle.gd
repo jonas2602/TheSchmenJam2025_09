@@ -31,11 +31,11 @@ func _on_reach_destination():
 
 	pass
 
-func _on_area_2d_area_entered(area):
-	var other = area.get_parent()
+func _on_area_2d_area_entered(area : Area2D):
+	var other : Node = area.get_owner()
 	print(name, " from ", info.src_tile_coords, " to ", info.dst_tile_coords, " caught by " + other.name)
+	assert(other.name.begins_with("Guard"))
 
 	# Handle "collision" with player
-	if (other.name == "Guard"):
-		GlobalEventSystem.player_conquer_stopped.emit(info.src_tile_coords, info.dst_tile_coords)
-		queue_free()
+	GlobalEventSystem.player_conquer_stopped.emit(info.src_tile_coords, info.dst_tile_coords)
+	queue_free()
