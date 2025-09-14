@@ -156,13 +156,13 @@ func _input(event : InputEvent):
 	pass
 
 func _mouse_to_local(mouse_pos : Vector2):
-	# todo need to handle the pos
-	var top_left := Vector2(0, 0)
+	var local_pos = mouse_pos
 	var cam : Camera2D = get_viewport().get_camera_2d()
 	if cam:
-		top_left = cam.position - get_viewport_rect().size / 2;
-		
-	return top_left + mouse_pos
+		local_pos = get_viewport().canvas_transform.affine_inverse().basis_xform(local_pos)
+		local_pos += cam.position
+	
+	return local_pos
 
 func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	interaction_layer.set_cell(attack_origin_pos, 0, atlas_coords_active_attack_self, 0)

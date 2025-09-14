@@ -11,8 +11,8 @@ extends Camera2D
 @export var zoom_follow_cursor : bool = true
 
 @export_range(100, 2000, 10) var pan_speed: float = 1000.0
-@export_range(1, 20, 0.01) var max_zoom_level : float = 5.0
-@export_range(0.01, 1, 0.01) var min_zoom_level : float = 0.1
+@export_range(1, 20, 0.01) var max_zoom_level : float = 1.5
+@export_range(0.01, 1, 0.01) var min_zoom_level : float = 0.5
 @export_range(0.01, 0.2, 0.01) var zoom_factor : float = 0.08
 
 @export_group("Edge Scrolling")
@@ -107,11 +107,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if Input.is_action_just_pressed(zoom_in_input):
 		target_zoom *= 1.0 / (1.0 - zoom_factor)
-		zoom_mouse_pos = get_viewport().get_mouse_position() - 0.5 * get_viewport_rect().size 
+		zoom_mouse_pos = get_viewport().get_mouse_position()
 
 	if Input.is_action_just_pressed(zoom_out_input):
 		target_zoom *= (1.0 - zoom_factor)
-		zoom_mouse_pos = get_viewport().get_mouse_position() - 0.5 * get_viewport_rect().size
+		zoom_mouse_pos = get_viewport().get_mouse_position()
 
 	if Input.is_action_pressed(pan_input):
 		#print(target_position)

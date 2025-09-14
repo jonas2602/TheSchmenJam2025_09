@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://do1liqfnbp3y4" path="res://scripts/camera.gd" id="1_70n02"]
 
 [node name="Camera" type="Camera2D"]
+anchor_mode = 0
 script = ExtResource("1_70n02")
 pan_smoothness = 0.3
