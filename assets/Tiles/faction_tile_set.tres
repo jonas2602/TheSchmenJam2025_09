@@ -1,0 +1,17 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://c7wrpfeiavv4d"]
+
+[ext_resource type="Texture2D" uid="uid://cg246dblwj0pc" path="res://assets/Tiles/FactionTiles.png" id="1_8g5tm"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uy7dg"]
+texture = ExtResource("1_8g5tm")
+texture_region_size = Vector2i(300, 300)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+
+[resource]
+tile_size = Vector2i(300, 300)
+sources/1 = SubResource("TileSetAtlasSource_uy7dg")
