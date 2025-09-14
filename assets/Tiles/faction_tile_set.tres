@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://c7wrpfeiavv4d"]
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bc6ektqhekkg4"]
 
 [ext_resource type="Texture2D" uid="uid://cg246dblwj0pc" path="res://assets/Tiles/FactionTiles.png" id="1_8g5tm"]
 
@@ -7,11 +7,17 @@ texture = ExtResource("1_8g5tm")
 texture_region_size = Vector2i(300, 300)
 0:0/0 = 0
 1:0/0 = 0
+1:0/0/custom_data_0 = 1
 2:0/0 = 0
+2:0/0/custom_data_0 = 2
 0:1/0 = 0
+0:1/0/custom_data_0 = 3
 1:1/0 = 0
+1:1/0/custom_data_0 = 4
 2:1/0 = 0
 
 [resource]
 tile_size = Vector2i(300, 300)
+custom_data_layer_0/name = "faction_id"
+custom_data_layer_0/type = 2
 sources/1 = SubResource("TileSetAtlasSource_uy7dg")
