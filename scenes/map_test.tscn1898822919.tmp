@@ -7,7 +7,6 @@
 [node name="Map" type="Node2D"]
 
 [node name="GameMap" parent="." instance=ExtResource("1_x5nem")]
-base_capture_time = 20.0
 
 [node name="Guard" parent="." instance=ExtResource("3_g3f5c")]
 position = Vector2(146, 460)
