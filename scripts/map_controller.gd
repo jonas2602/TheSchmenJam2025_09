@@ -97,13 +97,13 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 	
 	# reset attack tiles when selecting them again
 	if (new_cell_pos == attack_cell_origin):
-		attack_cell_origin = GlobalEventSystem.invalid_tile_pos
 		interaction_layer.set_cell(attack_cell_origin, -1)
+		attack_cell_origin = GlobalEventSystem.invalid_tile_pos
 		return
 	if (new_cell_pos == attack_cell_target):
 		# reset attack tile when selecting it again
-		attack_cell_target = GlobalEventSystem.invalid_tile_pos
 		interaction_layer.set_cell(attack_cell_target, -1)
+		attack_cell_target = GlobalEventSystem.invalid_tile_pos
 		return
 	
 	if (_involved_in_attack(new_cell_pos)):
