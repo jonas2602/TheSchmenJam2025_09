@@ -8,6 +8,8 @@ extends Node
 @export var rotation_delay_max    : float = 5
 @export var rotation_delay_active : float = 0
 
+@onready var sprite_rect_node : AnimatedSprite2D = $AnimatedSprite2D
+
 @onready var game_map : Node = get_tree().get_root().find_child("GameMap", true, false)
 
 # Called when the node enters the scene tree for the first time.
@@ -44,5 +46,6 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_inde
 	if (cell_faction_id != self_faction_id):
 		return # only care about attacks to tiles of my own faction
 	
+	sprite_rect_node.play("detect")
 	print("hit body shape: %d, (%d, %d), %s, %d, %d" % [body_rid.get_id(), cell_pos.x, cell_pos.y, body.name, body_shape_index, local_shape_index])
 	pass # Replace with function body.
