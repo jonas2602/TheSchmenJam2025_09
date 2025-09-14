@@ -1,8 +1,10 @@
 extends Node
-	
-static var hovered_tile_pos        = Vector2i(255, 255)
-static var last_clicked_tile_pos   = Vector2i(255, 255)
-static var last_conquered_tile_pos = Vector2i(255, 255)
+
+static var invalid_tile_pos : Vector2i = Vector2i(-1, -1)
+
+static var hovered_tile_pos        = invalid_tile_pos
+static var last_clicked_tile_pos   = invalid_tile_pos
+static var last_conquered_tile_pos = invalid_tile_pos
 static var conquering_tile_timers  = {}
 
 
