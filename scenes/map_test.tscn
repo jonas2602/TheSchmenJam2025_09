@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=4 uid="uid://dcn4pxv6qemmt"]
+[gd_scene load_steps=4 format=4 uid="uid://dcn4pxv6qemmt"]
 
 [ext_resource type="Script" uid="uid://d3vufywj2irt2" path="res://scenes/map_controller.gd" id="1_x5nem"]
-[ext_resource type="PackedScene" uid="uid://k170362tkn4l" path="res://scenes/tile_map_layer.tscn" id="1_y150f"]
+[ext_resource type="PackedScene" uid="uid://k170362tkn4l" path="res://scenes/test_map_layer.tscn" id="1_y150f"]
+[ext_resource type="PackedScene" uid="uid://cwi03rtm2hq5t" path="res://prefabs/camera.tscn" id="3_o4b1t"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_x5nem")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_y150f")]
 tile_map_data = PackedByteArray("AAADAAMAAAANAAUAAAADAAIAAAANAAUAAAADAAEAAAANAAUAAAADAAAAAAANAAUAAAACAAMAAAAMAAUAAAACAAIAAAAQAAUAAAACAAEAAAAQAAUAAAACAAAAAAAPAAUAAAABAAMAAAAMAAUAAAABAAIAAAAQAAUAAAABAAEAAAAQAAUAAAABAAAAAAAPAAUAAAAAAAMAAAAOAAUAAAAAAAIAAAAOAAUAAAAAAAEAAAAOAAUAAAAAAAAAAAAOAAUAAAADAAcAAAAMAAYAAAADAAYAAAAMAAYAAAADAAUAAAAMAAYAAAADAAQAAAAMAAYAAAACAAcAAAANAAYAAAACAAYAAAAQAAYAAAACAAUAAAAQAAYAAAACAAQAAAAPAAYAAAABAAcAAAANAAYAAAABAAYAAAAQAAYAAAABAAUAAAAQAAYAAAABAAQAAAAPAAYAAAAAAAcAAAANAAYAAAAAAAYAAAAOAAYAAAAAAAUAAAAOAAYAAAAAAAQAAAAOAAYAAAA=")
+
+[node name="Camera" parent="." instance=ExtResource("3_o4b1t")]
+position = Vector2(103, 133)

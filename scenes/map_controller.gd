@@ -3,13 +3,14 @@ extends Node2D
 @export var base_capture_time : float = 3.0
 
 @onready var tile_map_layer = $TileMapLayer
-
+@onready var camera = $Camera
 
 func _input(event):
 	# need to detect mouse over
 	if event is InputEventMouseMotion:
 		#print("Mouse is at: ", event.position)
-		var tile_pos	 = tile_map_layer.local_to_map(event.position)
+		var topLeft = camera.position - get_viewport_rect().size / 2;
+		var tile_pos	 = tile_map_layer.local_to_map(event.position + topLeft)
 		if (tile_pos != GlobalEventSystem.hovered_tile_pos):
 			print("Tile ", tile_pos, " is selected")
 			GlobalEventSystem.hovered_tile_changed.emit(tile_pos)
