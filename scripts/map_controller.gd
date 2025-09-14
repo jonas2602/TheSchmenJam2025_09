@@ -8,15 +8,15 @@ extends Node2D
 @onready var hover_layer       : TileMapLayer = $Hover
 @onready var occupation_layer  : TileMapLayer = $Occupation
 
-const atlas_coords_hovered_other   : Vector2i = Vector2i( 9, 4)
-const atlas_coords_hovered_self    : Vector2i = Vector2i(10, 4)
-const atlas_coords_hovered_neutral : Vector2i = Vector2i(11, 4)
+const atlas_coords_hovered_other   : Vector2i = Vector2i(0, 1)
+const atlas_coords_hovered_self    : Vector2i = Vector2i(0, 1)
+const atlas_coords_hovered_neutral : Vector2i = Vector2i(0, 3)
 
-const atlas_coords_selected_self  : Vector2i = Vector2i(11, 5)
-const atlas_coords_selected_other : Vector2i = Vector2i( 9, 5)
+const atlas_coords_selected_self  : Vector2i = Vector2i(0, 0)
+const atlas_coords_selected_other : Vector2i = Vector2i(0, 0)
 
-const atlas_coords_active_attack_self  : Vector2i = Vector2i(11, 6)
-const atlas_coords_active_attack_other : Vector2i = Vector2i( 9, 6)
+const atlas_coords_active_attack_self  : Vector2i = Vector2i(1, 3)
+const atlas_coords_active_attack_other : Vector2i = Vector2i(0, 2)
 
 var attack_cell_origin : Vector2i = GlobalEventSystem.invalid_tile_pos
 var attack_cell_target : Vector2i = GlobalEventSystem.invalid_tile_pos

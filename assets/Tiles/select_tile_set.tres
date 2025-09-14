@@ -1,0 +1,36 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cmue5u3jct2yf"]
+
+[ext_resource type="Texture2D" uid="uid://b6mo2t1wtxix" path="res://assets/Tiles/Tile_Map_Select.png" id="1_c2n3x"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c2n3x"]
+texture = ExtResource("1_c2n3x")
+texture_region_size = Vector2i(300, 300)
+0:0/animation_columns = 3
+0:0/animation_speed = 2.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/0 = 0
+0:1/animation_speed = 2.0
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/0 = 0
+0:2/animation_speed = 2.0
+0:2/animation_frame_0/duration = 1.0
+0:2/animation_frame_1/duration = 1.0
+0:2/animation_frame_2/duration = 1.0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-150, -150, 150, -150, 150, 150, -150, 150)
+0:2/0/custom_data_0 = true
+0:3/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-150, -150, 150, -150, 150, 150, -150, 150)
+1:3/0/custom_data_0 = true
+
+[resource]
+tile_size = Vector2i(300, 300)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "active_attack"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_c2n3x")
