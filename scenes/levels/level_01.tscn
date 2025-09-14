@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=4 uid="uid://cccg62uv01b0y"]
 
-[ext_resource type="PackedScene" uid="uid://b4tagqxjb8k2y" path="res://prefabs/game_map.tscn" id="1_mofoo"]
+[ext_resource type="PackedScene" uid="uid://4xl7bkywymmj" path="res://prefabs/game_map.tscn" id="1_mofoo"]
 [ext_resource type="PackedScene" uid="uid://bc8x3iek1kqr5" path="res://prefabs/guard.tscn" id="2_nr3cb"]
 [ext_resource type="PackedScene" uid="uid://cwi03rtm2hq5t" path="res://prefabs/camera.tscn" id="3_j60wy"]
 

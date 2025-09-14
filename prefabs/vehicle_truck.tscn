@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://btgofxcobsea2"]
+
+[ext_resource type="Script" uid="uid://dojblajx1dmmc" path="res://scripts/vehicle.gd" id="1_53a1t"]
+[ext_resource type="Texture2D" uid="uid://dqem20ues78gw" path="res://assets/Vehicle_Truck.png" id="1_f87iw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f87iw"]
+radius = 48.0
+height = 216.0
+
+[node name="VehicleTruck" type="Node2D"]
+script = ExtResource("1_53a1t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_f87iw")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-16, -15)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f87iw")

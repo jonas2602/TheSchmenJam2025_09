@@ -5,12 +5,13 @@ static var invalid_tile_pos : Vector2i = Vector2i(-1, -1)
 static var hovered_tile_pos        = invalid_tile_pos
 static var last_clicked_tile_pos   = invalid_tile_pos
 static var last_conquered_tile_pos = invalid_tile_pos
-static var conquering_tile_timers  = {}
 
 
 signal hovered_tile_changed(tile_pos : Vector2i)
 signal clicked_tile(tile_pos : Vector2i)
-signal conquered_tile(tile_pos : Vector2i)
+signal conquered_tile(src_tile_pos : Vector2i, dst_tile_pos : Vector2i)
+signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
+
 
 # Various handlers to cache the state global state for other scripts
 

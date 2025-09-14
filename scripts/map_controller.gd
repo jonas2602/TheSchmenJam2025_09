@@ -2,6 +2,7 @@ extends Node2D
 
 @export var base_capture_time : float = 3.0
 @export var self_faction_id : int = 2
+@export var conquering_vehicle : PackedScene
 
 @onready var interaction_layer : TileMapLayer = $Interaction
 @onready var hover_layer       : TileMapLayer = $Hover
@@ -21,6 +22,10 @@ const faction_id_neutral : int = -1
 
 var attack_cell_origin : Vector2i = GlobalEventSystem.invalid_tile_pos
 var attack_cell_target : Vector2i = GlobalEventSystem.invalid_tile_pos
+
+func _ready() -> void:
+	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
+	pass
 
 func _get_cell_faction(cell_pos : Vector2i) -> int:
 	var cell_data : TileData = occupation_layer.get_cell_tile_data(cell_pos)
@@ -125,7 +130,7 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 		return # target not set yet
 
 	# start conquering the tile if not already in progress
-	_start_conquering(attack_cell_origin, attack_cell_target)
+	_start_conquering(attack_cell_origin, attack_cell_target, cell_faction)
 	
 	# reset attack tile cache
 	attack_cell_origin = GlobalEventSystem.invalid_tile_pos
@@ -164,36 +169,33 @@ func _mouse_to_local(mouse_pos : Vector2):
 	
 	return local_pos
 
-func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2i, cell_faction : int):
 	interaction_layer.set_cell(attack_origin_pos, 0, atlas_coords_active_attack_self, 0)
 	interaction_layer.set_cell(attack_target_pos, 0, atlas_coords_active_attack_other, 0)
 	
-	print("Beginning to conquer tile: ", attack_target_pos)
-
-	var conquered_timer = Timer.new()
-	add_child(conquered_timer)
-	conquered_timer.wait_time = base_capture_time
-	conquered_timer.timeout.connect(func(): self._conquer_tile(attack_origin_pos, attack_target_pos))
-	conquered_timer.one_shot = true
-	conquered_timer.start()
+	# Spawn the truck
+	var info : VehicleInfo = VehicleInfo.new()
+	info.src_tile_coords = attack_origin_pos
+	info.dst_tile_coords = attack_target_pos
+	info.src_position    = occupation_layer.map_to_local(attack_origin_pos)
+	info.dst_position    = occupation_layer.map_to_local(attack_target_pos)
+	# TODO: Take terrain features into account
+	info.seconds_to_destination = 3
+	info.target_faction_id = cell_faction
 	
-	# add the timer to global list so it can be aborted
-	GlobalEventSystem.conquering_tile_timers[attack_target_pos] = conquered_timer
+	var truck = conquering_vehicle.instantiate()
+	truck.initialize_vehicle(info)
+	add_child(truck)
+	
+	print("Beginning to conquer tile: ", attack_target_pos)
 	pass
 
-
-func _conquer_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
-	# TODO: Pool the timers somehow?
-	GlobalEventSystem.conquering_tile_timers[attack_target_pos].queue_free()
-	GlobalEventSystem.conquering_tile_timers.erase(attack_target_pos)
-	
+func _on_conquered_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	interaction_layer.set_cell(attack_origin_pos, -1)
 	interaction_layer.set_cell(attack_target_pos, -1)
 	
 	var faction_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(attack_origin_pos)
 	var faction_source_id    : int      = occupation_layer.get_cell_source_id(attack_origin_pos)
 	occupation_layer.set_cell(attack_target_pos, faction_source_id, faction_atlas_coords)
-	
-	GlobalEventSystem.conquered_tile.emit(attack_target_pos)
 	
 	pass
