@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://de1yn6wijqu2n"]
+
+[ext_resource type="Texture2D" uid="uid://dkta1tw2xvupt" path="res://assets/Flag/Flag_Default_Frame1.png" id="1_ikldd"]
+[ext_resource type="Texture2D" uid="uid://ge0r7uijitxv" path="res://assets/Flag/Flag_Default_Frame2.png" id="2_2myga"]
+[ext_resource type="Texture2D" uid="uid://3f10ehr2y28u" path="res://assets/Flag/Flag_Default_Frame3.png" id="3_copec"]
+[ext_resource type="Texture2D" uid="uid://cn167t3gnjq88" path="res://assets/Flag/Flag_Default_Frame4.png" id="4_6wuoi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lxm8q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ikldd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2myga")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_copec")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6wuoi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="FlagDefault" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_lxm8q")
+frame_progress = 0.94964
