@@ -147,7 +147,7 @@ func _input(event : InputEvent):
 
 		var cell_pos : Vector2i = occupation_layer.local_to_map(_mouse_to_local(event.position))
 		if (cell_pos != GlobalEventSystem.hovered_tile_pos):
-			print("Tile ", cell_pos, " from faction ", _get_cell_faction(cell_pos), " is hovered" )
+			#print("Tile ", cell_pos, " from faction ", _get_cell_faction(cell_pos), " is hovered" )
 			_update_hovered_tile(GlobalEventSystem.hovered_tile_pos, cell_pos)
 			GlobalEventSystem.hovered_tile_changed.emit(cell_pos)
 	pass
