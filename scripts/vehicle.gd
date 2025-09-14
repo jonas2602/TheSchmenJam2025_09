@@ -32,7 +32,7 @@ func _on_reach_destination():
 	pass
 
 func _on_area_2d_area_entered(area : Area2D):
-	var other : Node = area.get_owner()
+	var other : Node = area.get_owner().get_owner()
 	print(name, " from ", info.src_tile_coords, " to ", info.dst_tile_coords, " caught by " + other.name)
 	assert(other.name.begins_with("Guard"))
 
