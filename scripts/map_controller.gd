@@ -100,7 +100,6 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 		return # can't reselect tiles while they are involved in an attack
 	
 	if (cell_faction == self_faction_id):
-		# TODO: is adjacent to the already selected target tile / any enemy tile adjacent to self tile
 		if (attack_cell_target != GlobalEventSystem.invalid_tile_pos && !_is_neighbor_cell(attack_cell_target, new_cell_pos)):
 			return # not a neighbor of the already selected target tile
 		if (!_is_border_tile(new_cell_pos, self_faction_id, false)):
