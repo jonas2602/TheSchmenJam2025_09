@@ -1,6 +1,8 @@
 extends Node
 
 static var invalid_tile_pos : Vector2i = Vector2i(-1, -1)
+static var faction_id_neutral : int    = -1
+
 
 static var hovered_tile_pos        = invalid_tile_pos
 static var last_clicked_tile_pos   = invalid_tile_pos
