@@ -1,11 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://bc8x3iek1kqr5"]
+[gd_scene load_steps=9 format=3 uid="uid://bc8x3iek1kqr5"]
 
 [ext_resource type="Script" uid="uid://6ptruw61t113" path="res://scripts/guard_controller.gd" id="1_k8le7"]
-[ext_resource type="Texture2D" uid="uid://dalwuqko6rorx" path="res://assets/GuardFace.png" id="2_t148x"]
+[ext_resource type="Texture2D" uid="uid://bi5mh6w2cqbgd" path="res://assets/Guard/Guard_frame0000.png" id="3_67366"]
+[ext_resource type="Texture2D" uid="uid://k7q1ud5t6ym6" path="res://assets/Guard/Guard_frame0001.png" id="4_enfdn"]
+[ext_resource type="Texture2D" uid="uid://cte2sxgy0u7ok" path="res://assets/Guard/Guard_frame0002.png" id="5_by5uw"]
+[ext_resource type="Texture2D" uid="uid://d4a01s6dwv1wo" path="res://assets/Guard/Guard_frame0003.png" id="6_83uab"]
+[ext_resource type="Texture2D" uid="uid://bi0kcm3dbdvdp" path="res://assets/Guard/Guard_frame0004.png" id="7_650ae"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_ssob5"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_yv025"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_8gf0r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_67366")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_67366")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_enfdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_by5uw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_83uab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_650ae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_67366")
+}],
+"loop": false,
+"name": &"detect",
+"speed": 5.0
+}]
 
 [node name="Guard" type="Node2D"]
 script = ExtResource("1_k8le7")
@@ -25,10 +61,11 @@ scale = Vector2(0.004, 0.004)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ViewFrustum/Area2D"]
 polygon = PackedVector2Array(-13, 1, 238, 124, 239, -124)
 
-[node name="Face" type="MeshInstance2D" parent="."]
-scale = Vector2(78.189, 78.189)
-mesh = SubResource("QuadMesh_yv025")
-texture = ExtResource("2_t148x")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_8gf0r")
+animation = &"detect"
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
