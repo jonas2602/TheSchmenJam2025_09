@@ -20,6 +20,12 @@ const atlas_coords_active_attack_other : Vector2i = Vector2i( 9, 6)
 var attack_cell_origin : Vector2i = GlobalEventSystem.invalid_tile_pos
 var attack_cell_target : Vector2i = GlobalEventSystem.invalid_tile_pos
 
+func _get_coords_for_world_pos(world_pos : Vector2) -> Vector2i:
+	return occupation_layer.local_to_map(occupation_layer.to_local(world_pos))
+	
+func _get_coords_for_body_rid(body_rid : RID) -> Vector2i:
+	return occupation_layer.get_coords_for_body_rid(body_rid)
+	
 func _get_cell_faction(cell_pos : Vector2i) -> int:
 	var cell_data : TileData = occupation_layer.get_cell_tile_data(cell_pos)
 	if (cell_data == null):
