@@ -7,8 +7,6 @@ extends Node2D
 @onready var hover_layer       : TileMapLayer = $Hover
 @onready var occupation_layer  : TileMapLayer = $Occupation
 
-@onready var camera = $Camera
-
 const atlas_coords_hovered_other   : Vector2i = Vector2i( 9, 4)
 const atlas_coords_hovered_self    : Vector2i = Vector2i(10, 4)
 const atlas_coords_hovered_neutral : Vector2i = Vector2i(11, 4)
@@ -138,7 +136,10 @@ func _input(event : InputEvent):
 	# need to detect mouse over
 	if event is InputEventMouseMotion:
 		#print("Mouse is at: ", event.position)
-		var topLeft = camera.position - get_viewport_rect().size / 2;
+		var topLeft := Vector2(0, 0);
+		if get_viewport().get_camera_2d():
+			topLeft = get_viewport().get_camera_2d().position - get_viewport_rect().size / 2;
+		
 		var cell_pos : Vector2i = occupation_layer.local_to_map(event.position + topLeft)
 		if (cell_pos != GlobalEventSystem.hovered_tile_pos):
 			print("Tile ", cell_pos, " is hovered")
