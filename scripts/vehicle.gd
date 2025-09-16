@@ -4,8 +4,11 @@ extends Node2D
 var info : VehicleInfo = VehicleInfo.new()
 var _time : float = 0
 
+@onready var sprite : Sprite2D = $Sprite2D
+
 func _ready() -> void:
-	pass
+	if (info.dst_tile_coords.x < info.src_tile_coords.x):
+		sprite.set_flip_h(true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -22,6 +25,7 @@ func _process(delta):
 func initialize_vehicle(vehicle_info : VehicleInfo):
 	info     = vehicle_info
 	global_position = vehicle_info.src_position
+	
 	pass
 
 func _on_reach_destination():
