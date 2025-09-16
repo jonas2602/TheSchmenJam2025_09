@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TheSchmenJam2025_09"
-run/main_scene="uid://cccg62uv01b0y"
+run/main_scene="uid://chp22ocoa5biv"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
