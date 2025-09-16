@@ -7,6 +7,7 @@ extends Node
 @export var rotation_delay_min    : float = 2
 @export var rotation_delay_max    : float = 5
 @export var rotation_delay_active : float = 0
+@export var rotation_delay_detect : float = 4
 
 @onready var sprite_rect_node : AnimatedSprite2D = $AnimatedSprite2D
 
@@ -16,6 +17,9 @@ extends Node
 func _ready():
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
 	self_faction_id = game_map._get_cell_faction(self_tile_pos)
+	
+	rotation_delay_active = randf_range(rotation_delay_min, rotation_delay_max)
+	$Timer.start(rotation_delay_detect)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -33,19 +37,21 @@ func _on_timer_timeout():
 	_init_rotation(delta_degrees)
 	
 	rotation_delay_active = randf_range(rotation_delay_min, rotation_delay_max)
-	$Timer.set_wait_time(rotation_delay_active)
+	$Timer.start(rotation_delay_detect)
 	
 	pass
 
-func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	var cell_pos : Vector2i = game_map._get_coords_for_body_rid(body_rid)
-	if (!game_map._involved_in_attack(cell_pos)):
-		return # only care about attacked tiles
+func _on_vision_cone_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	var other : Node2D = area.get_owner()
+	if (!other.name.begins_with("Vehicle")):
+		return # collision with another guard
 	
-	var cell_faction_id : int = game_map._get_cell_faction(cell_pos)
-	if (cell_faction_id != self_faction_id):
-		return # only care about attacks to tiles of my own faction
+	# stay focused on the current spot for a while
+	var forward    : Vector2 = Vector2(1, 0).rotated(self.rotation)
+	var target_dir : Vector2 = (other.position - self.position).normalized()
+	var angle_rad : float = forward.angle_to(target_dir)
+	var angle_deg : float = rad_to_deg(angle_rad)
+	_init_rotation(angle_deg)
 	
+	$Timer.start(rotation_delay_detect)
 	sprite_rect_node.play("detect")
-	print("hit body shape: %d, (%d, %d), %s, %d, %d" % [body_rid.get_id(), cell_pos.x, cell_pos.y, body.name, body_shape_index, local_shape_index])
-	pass # Replace with function body.
