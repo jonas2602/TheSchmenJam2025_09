@@ -177,8 +177,23 @@ texture_region_size = Vector2i(300, 300)
 4:3/0 = 0
 5:3/0 = 0
 6:3/0 = 0
+6:3/0/terrain_set = 0
+6:3/0/terrain = 2
 6:1/0 = 0
 6:2/0 = 0
+3:4/0 = 0
+2:4/0 = 0
+1:4/0 = 0
+0:4/0 = 0
+0:5/animation_columns = 5
+0:5/animation_speed = 3.0
+0:5/animation_frame_0/duration = 1.0
+0:5/animation_frame_1/duration = 1.0
+0:5/animation_frame_2/duration = 1.0
+0:5/animation_frame_3/duration = 1.0
+0:5/animation_frame_4/duration = 1.0
+0:5/0 = 0
+4:4/0 = 0
 
 [resource]
 tile_size = Vector2i(300, 300)
