@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://chp22ocoa5biv"]
+[gd_scene load_steps=11 format=4 uid="uid://chp22ocoa5biv"]
 
 [ext_resource type="Script" uid="uid://bhv0epkpiyxdf" path="res://scripts/level_manager.gd" id="1_0g0p3"]
 [ext_resource type="PackedScene" uid="uid://4xl7bkywymmj" path="res://prefabs/game_map.tscn" id="1_rn33l"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ck6o7ajxtbkv1" path="res://scenes/levels/level_00.tscn" id="4_qrtlt"]
 [ext_resource type="Texture2D" uid="uid://vmk2oswbhdgx" path="res://assets/UI/Title.png" id="5_qx3wq"]
 [ext_resource type="PackedScene" uid="uid://cwi03rtm2hq5t" path="res://prefabs/camera.tscn" id="6_qx3wq"]
+[ext_resource type="Texture2D" uid="uid://ysnh0l2hbk1j" path="res://assets/UI/WindowSurrounding.png" id="10_vb3gq"]
 
 [node name="MasterScene" type="Node2D" node_paths=PackedStringArray("level_lookup")]
 script = ExtResource("1_0g0p3")
@@ -44,5 +45,19 @@ position = Vector2(1655, -1024)
 texture = ExtResource("5_qx3wq")
 
 [node name="Camera" parent="." instance=ExtResource("6_qx3wq")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
+follow_viewport_enabled = true
+
+[node name="Control" type="Control" parent="Camera/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1767.0
+offset_bottom = 1031.0
+
+[node name="TextureRect" type="TextureRect" parent="Camera/CanvasLayer/Control"]
+offset_right = 2276.0
+offset_bottom = 1178.0
+texture = ExtResource("10_vb3gq")
 
 [editable path="Background"]
