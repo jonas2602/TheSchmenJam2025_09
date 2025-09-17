@@ -1,12 +1,14 @@
 extends Node2D
 
 @export var base_capture_time : float = 3.0
-@export var self_faction_id : int = 2
+@export var self_faction_id : int = 0
 @export var conquering_vehicle : PackedScene
 
-@onready var interaction_layer : TileMapLayer = $Interaction
-@onready var hover_layer       : TileMapLayer = $Hover
-@onready var occupation_layer  : TileMapLayer = $Occupation
+@onready var terrain_base_layer    : TileMapLayer = $BaseTerrain
+@onready var terrain_feature_layer : TileMapLayer = $TerrainFeatures
+@onready var interaction_layer     : TileMapLayer = $Interaction
+@onready var hover_layer           : TileMapLayer = $Hover
+@onready var occupation_layer      : TileMapLayer = $Occupation
 
 const atlas_coords_hovered_other   : Vector2i = Vector2i(0, 1)
 const atlas_coords_hovered_self    : Vector2i = Vector2i(0, 1)
@@ -39,6 +41,14 @@ func _get_cell_faction(cell_pos : Vector2i) -> int:
 	
 	var faction_id : int = cell_data.get_custom_data("faction_id")
 	return faction_id
+
+func _get_cell_activate_name(cell_pos : Vector2i) -> String:
+	var cell_data : TileData = terrain_feature_layer.get_cell_tile_data(cell_pos)
+	if (cell_data == null):
+		return "" # cell is not marked up for activation
+	
+	var activate : String = cell_data.get_custom_data("activate")
+	return activate
 
 func _involved_in_attack(cell_pos : Vector2i) -> bool:
 	var cell_data : TileData = interaction_layer.get_cell_tile_data(cell_pos)
