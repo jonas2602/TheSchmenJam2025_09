@@ -45,19 +45,17 @@ position = Vector2(1655, -1024)
 texture = ExtResource("5_qx3wq")
 
 [node name="Camera" parent="." instance=ExtResource("6_qx3wq")]
+position = Vector2(-1615.77, -1727.27)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
-follow_viewport_enabled = true
 
-[node name="Control" type="Control" parent="Camera/CanvasLayer"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1767.0
-offset_bottom = 1031.0
-
-[node name="TextureRect" type="TextureRect" parent="Camera/CanvasLayer/Control"]
-offset_right = 2276.0
-offset_bottom = 1178.0
+[node name="TextureRect" type="TextureRect" parent="Camera/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("10_vb3gq")
+expand_mode = 1
 
 [editable path="Background"]
