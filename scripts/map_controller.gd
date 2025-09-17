@@ -172,6 +172,7 @@ func _mouse_to_local(mouse_pos : Vector2):
 		local_pos = get_viewport().canvas_transform.affine_inverse().basis_xform(local_pos)
 		local_pos += cam.position
 	
+	local_pos -= self.get_owner().position # NOTE: get_owner() because the GameMap instance is not the root of the prefab
 	return local_pos
 
 func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2i, cell_faction : int):
