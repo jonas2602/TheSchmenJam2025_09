@@ -1,6 +1,6 @@
 extends Node
 
-static var invalid_tile_pos : Vector2i = Vector2i(-1, -1)
+static var invalid_tile_pos : Vector2i = Vector2i.MAX
 static var faction_id_neutral : int    = -1
 
 
