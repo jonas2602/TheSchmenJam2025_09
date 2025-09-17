@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ck6o7ajxtbkv1" path="res://scenes/levels/level_00.tscn" id="4_qrtlt"]
 [ext_resource type="Texture2D" uid="uid://vmk2oswbhdgx" path="res://assets/UI/Title.png" id="5_qx3wq"]
 [ext_resource type="PackedScene" uid="uid://cwi03rtm2hq5t" path="res://prefabs/camera.tscn" id="6_qx3wq"]
-[ext_resource type="Texture2D" uid="uid://ysnh0l2hbk1j" path="res://assets/UI/WindowSurrounding.png" id="10_vb3gq"]
+[ext_resource type="PackedScene" uid="uid://cbx3ik61j0d5u" path="res://prefabs/hud.tscn" id="13_j4w6v"]
 
 [node name="MasterScene" type="Node2D" node_paths=PackedStringArray("level_lookup")]
 script = ExtResource("1_0g0p3")
@@ -49,13 +49,6 @@ position = Vector2(-1615.77, -1727.27)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
 
-[node name="TextureRect" type="TextureRect" parent="Camera/CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("10_vb3gq")
-expand_mode = 1
+[node name="Hud" parent="Camera/CanvasLayer" instance=ExtResource("13_j4w6v")]
 
 [editable path="Background"]
