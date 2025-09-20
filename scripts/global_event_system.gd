@@ -25,7 +25,7 @@ func _init() -> void:
 	pass
 
 func _on_hovered_tile_changed(tile_pos : Vector2i):
-	print("Changing hovered tile from ", hovered_tile_pos, " to ", tile_pos)
+	#print("Changing hovered tile from ", hovered_tile_pos, " to ", tile_pos)
 	hovered_tile_pos = tile_pos
 	pass
 
