@@ -53,6 +53,8 @@ func _activate_map(map_name : String) -> void:
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
 		_copy_cell(prefab_terrain_feature_layer, source_coords, terrain_feature_layer, source_coords + level_offset)
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
+		if (occupation_layer.get_cell_source_id(source_coords + level_offset) != -1):
+			continue # do not change the state of occupation tiles that already exist in the target layer
 		_copy_cell(prefab_occupation_layer, source_coords, occupation_layer, source_coords + level_offset)
 		_count_occupation_cell(source_coords + level_offset)
 	
