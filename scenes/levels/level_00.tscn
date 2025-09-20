@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=4 uid="uid://ck6o7ajxtbkv1"]
+[gd_scene load_steps=3 format=4 uid="uid://ck6o7ajxtbkv1"]
 
 [ext_resource type="PackedScene" uid="uid://4xl7bkywymmj" path="res://prefabs/game_map.tscn" id="1_rhuve"]
+[ext_resource type="PackedScene" uid="uid://bc8x3iek1kqr5" path="res://prefabs/guard.tscn" id="2_yaxa4"]
 
 [node name="Level00" type="Node2D"]
 
@@ -11,5 +12,17 @@ tile_map_data = PackedByteArray("AAD//wAAAQABAAAAAAAAAAAAAQABAAAAAAAAAP//AQABAAA
 
 [node name="BaseTerrain" parent="GameMap" index="1"]
 tile_map_data = PackedByteArray("AAD9////AQAAAAIAAAD+////AQABAAIAAAD/////AQAEAAAAAAAAAP//AQADAAAAAAABAP//AQACAAIAAAD//wAAAQAAAAEAAAAAAAAAAQADAAEAAAD9//7/AQAAAAEAAAD+//7/AQABAAEAAAD///7/AQABAAEAAAAAAP7/AQABAAEAAAABAP7/AQADAAAAAAACAP7/AQACAAIAAAACAP3/AQACAAAAAAABAP3/AQABAAAAAAAAAP3/AQADAAEAAAD///3/AQABAAEAAAAAAPz/AQACAAEAAAAAAPv/AQADAAAAAAABAPv/AQABAAIAAAACAPv/AQACAAIAAAD///z/AQABAAEAAAD///v/AQABAAEAAAABAPr/AQABAAEAAAACAPr/AQACAAEAAAAAAPr/AQABAAEAAAD///r/AQABAAEAAAD9//3/AQAAAAEAAAD+//3/AQABAAEAAAD+//z/AQABAAEAAAD9//z/AQAEAAAAAAD8//z/AQAAAAIAAAD9//v/AQAEAAEAAAD+//v/AQABAAEAAAD+//r/AQABAAEAAAD9//r/AQAAAAEAAAACAPn/AQADAAAAAAADAPn/AQABAAIAAAAEAPn/AQAEAAAAAAAEAPr/AQAAAAEAAAAEAPv/AQAAAAEAAAAEAPz/AQAAAAIAAAAFAPz/AQABAAIAAAAFAPv/AQABAAEAAAAFAPr/AQABAAEAAAAFAPn/AQABAAEAAAAFAPj/AQABAAAAAAAEAPj/AQABAAAAAAADAPj/AQABAAAAAAACAPj/AQABAAAAAAABAPj/AQAAAAAAAAABAPn/AQAEAAEAAAAAAPn/AQABAAAAAAD///n/AQABAAAAAAD+//n/AQABAAAAAAD9//n/AQAAAAAAAAD8//v/AQAAAAAAAAAGAPz/AQACAAIAAAAGAPv/AQACAAEAAAAGAPr/AQACAAEAAAAGAPn/AQACAAEAAAAGAPj/AQACAAAAAAA=")
+
+[node name="Guard" parent="GameMap/Guards" index="0" instance=ExtResource("2_yaxa4")]
+position = Vector2(-446, -455)
+scale = Vector2(2.91, 2.91)
+
+[node name="Guard2" parent="GameMap/Guards" index="1" instance=ExtResource("2_yaxa4")]
+position = Vector2(-446, -1660)
+scale = Vector2(2.91, 2.91)
+
+[node name="Guard3" parent="GameMap/Guards" index="2" instance=ExtResource("2_yaxa4")]
+position = Vector2(1661, -1664)
+scale = Vector2(2.91, 2.91)
 
 [editable path="GameMap"]
