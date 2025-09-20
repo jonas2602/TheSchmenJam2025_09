@@ -19,6 +19,7 @@ var _current_player_detects     : int = 0
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
 	GlobalEventSystem.level_complete.connect(_on_level_complete)
+	GlobalEventSystem.player_conquer_stopped.connect(_on_conquer_aborted)
 	
 	_activate_map("menu")
 
@@ -164,6 +165,7 @@ func _handle_activation_tile(activate_name : String):
 func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	_current_player_detects += 1
 	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
+	game_hud._play_random_enemy_quote()
 	
 	if (_current_player_detects > _max_player_detects_allowed):
 		print("You loose!")
