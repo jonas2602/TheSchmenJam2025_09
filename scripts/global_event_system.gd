@@ -34,7 +34,7 @@ func _on_tile_clicked(tile_pos : Vector2i):
 	last_clicked_tile_pos = tile_pos
 	pass
 
-func _on_tile_conquered(tile_pos : Vector2i):
-	print("Last conquered tile changed from ", last_conquered_tile_pos, " to ", tile_pos)
-	last_conquered_tile_pos = tile_pos
+func _on_tile_conquered(_src_tile_pos : Vector2i, dst_tile_pos : Vector2i):
+	print("Last conquered tile changed from ", last_conquered_tile_pos, " to ", dst_tile_pos)
+	last_conquered_tile_pos = dst_tile_pos
 	pass
