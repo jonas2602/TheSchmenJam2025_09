@@ -105,8 +105,17 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
+	
 	if (activate_name == "quit"):
 		get_tree().quit()
+		return
 	
-	if (level_lookup.get(activate_name) != null):
-		_activate_map(activate_name)
+	if (activate_name.begins_with("map_")):
+		var map_name : String = activate_name.substr(len("map_"))
+		if (level_lookup.get(map_name) == null):
+			print("trying to activate unknown map: ", map_name)
+			return
+			
+		_activate_map(map_name)
+		return
+	
