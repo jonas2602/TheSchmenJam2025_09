@@ -18,6 +18,7 @@ var _current_player_detects     : int = 0
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
+	GlobalEventSystem.level_complete.connect(_on_level_complete)
 	
 	_activate_map("menu")
 
@@ -121,6 +122,21 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 		print("You win!")
 		GlobalEventSystem.level_complete.emit()
 		pass
+
+func _on_level_complete():
+	var guards : Array[Node] = guards_root.get_children()
+	for guard : Node in guards:
+		var guard_pos : Vector2 = guard.global_position
+		var guard_tile_coord : Vector2i = occupation_layer.local_to_map(guard_pos)
+		# just append here as this list will be cleared afterwards
+		_tiles_to_conquer_list.append(guard_tile_coord)
+		guard.queue_free()
+		
+	main_map.set_tiles_as_conquered(_tiles_to_conquer_list)
+	_tiles_to_conquer_list.clear()
+	_remaining_tiles_to_conquer = 0
+	
+	# TODO: setup the next level
 
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
