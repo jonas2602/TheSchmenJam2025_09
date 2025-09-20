@@ -8,10 +8,13 @@ extends Node
 @onready var occupation_layer      : TileMapLayer = $GameMap/Occupation
 @onready var guards_root           : Node2D       = $GameMap/Guards
 @onready var main_map              : Node2D       = $GameMap
+@onready var game_hud              : Control      = $Camera/CanvasLayer/Hud
 
 var _tiles_to_conquer_list      : Array[Vector2i]
 var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
+var _max_player_detects_allowed : int = 0
+var _current_player_detects     : int = 0
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
@@ -79,6 +82,10 @@ func _activate_map(map_name : String) -> void:
 	
 	print("Tile to win: ", _total_tiles_to_conquer)
 	
+	_max_player_detects_allowed = _total_tiles_to_conquer / 10
+	_current_player_detects     = 0
+	print("Detects to loose: ", _max_player_detects_allowed + 1)
+	
 	# spawn the goal flag if it is not explicitly hidden by th designer
 	var goal_flag : Node2D = level_prefab.find_child("Flag", true, false)
 	if goal_flag.visible:
@@ -117,8 +124,31 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
+	
 	if (activate_name == "quit"):
 		get_tree().quit()
+		return
 	
-	if (level_lookup.get(activate_name) != null):
-		_activate_map(activate_name)
+	if (activate_name.begins_with("map_")):
+		var map_name : String = activate_name.substr(len("map_"))
+		if (level_lookup.get(map_name) == null):
+			print("trying to activate unknown map: ", map_name)
+			return
+			
+		_activate_map(map_name)
+		return
+	
+	if (activate_name.begins_with("credit_")):
+		var contributor_name : String = activate_name.substr(len("credit_"))
+		game_hud._play_credit_quote(contributor_name)
+		return
+	
+	print("unknown action for: ", activate_name)
+
+func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+	_current_player_detects += 1
+	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
+	
+	if (_current_player_detects > _max_player_detects_allowed):
+		print("You loose!")
+		GlobalEventSystem.level_failed.emit()

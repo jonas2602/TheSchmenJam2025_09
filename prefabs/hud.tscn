@@ -1,9 +1,62 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbx3ik61j0d5u"]
+[gd_scene load_steps=25 format=3 uid="uid://cbx3ik61j0d5u"]
 
 [ext_resource type="Texture2D" uid="uid://ysnh0l2hbk1j" path="res://assets/UI/WindowSurrounding.png" id="1_73jnp"]
+[ext_resource type="Script" uid="uid://pbofoobfj33k" path="res://scripts/hud_controller.gd" id="1_env85"]
+[ext_resource type="Texture2D" uid="uid://k8nnvtyv1gbu" path="res://assets/Faces/Giorgi/Giorgi_frame0000.png" id="2_2c7q2"]
 [ext_resource type="Texture2D" uid="uid://dklu0344n8cv1" path="res://assets/UI/Head_Display.png" id="2_448xx"]
 [ext_resource type="Texture2D" uid="uid://bpvaxpaddy1j8" path="res://assets/Faces/Inshal/Inshal_Glasses_frame0001.png" id="3_d7ypv"]
 [ext_resource type="Texture2D" uid="uid://b8bxkb0c385xm" path="res://assets/Faces/Inshal/Inshal_Glasses_frame0000.png" id="3_env85"]
+[ext_resource type="Texture2D" uid="uid://dg5i7c12l2g5v" path="res://assets/Faces/Giorgi/Giorgi_frame0001.png" id="3_kbakk"]
+[ext_resource type="Texture2D" uid="uid://dvbtrevs1yekj" path="res://assets/Faces/Guillaume/Guillaume_frame0000.png" id="4_wdagf"]
+[ext_resource type="Texture2D" uid="uid://bc5jcph71k01x" path="res://assets/Faces/Guillaume/Guillaume_frame0001.png" id="5_v1lt8"]
+[ext_resource type="Texture2D" uid="uid://r3a68hah8g2u" path="res://assets/Faces/Jonas/Jonas_frame0000.png" id="8_cl3kh"]
+[ext_resource type="Texture2D" uid="uid://dnb1e6yv4b88l" path="res://assets/Faces/Jonas/Jonas_frame0001.png" id="9_mov1p"]
+[ext_resource type="Texture2D" uid="uid://bydilpyn7m4y6" path="res://assets/Faces/Louis/Louis_frame0000.png" id="10_8w8hc"]
+[ext_resource type="Texture2D" uid="uid://b845fpd44snsw" path="res://assets/Faces/Louis/Louis_frame0001.png" id="11_jvdik"]
+[ext_resource type="Texture2D" uid="uid://bw565to576dys" path="res://assets/Faces/Tommaso/Tommaso_frame0000.png" id="12_ks61j"]
+[ext_resource type="Texture2D" uid="uid://cpay2ga3e56q" path="res://assets/Faces/Tommaso/Tommaso_frame0001.png" id="13_iobtr"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_78h74"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("2_2c7q2")
+frame_1/texture = ExtResource("3_kbakk")
+frame_1/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_7ldgf"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("4_wdagf")
+frame_1/texture = ExtResource("5_v1lt8")
+frame_1/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_ivri2"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("3_env85")
+frame_1/texture = ExtResource("3_d7ypv")
+frame_1/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_wxqkm"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("8_cl3kh")
+frame_1/texture = ExtResource("9_mov1p")
+frame_1/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_8sb1s"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("10_8w8hc")
+frame_1/texture = ExtResource("11_jvdik")
+frame_1/duration = 1.0
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_yre64"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("12_ks61j")
+frame_1/texture = ExtResource("13_iobtr")
+frame_1/duration = 1.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_mbxvq"]
 frames = 2
@@ -12,8 +65,10 @@ frame_0/texture = ExtResource("3_env85")
 frame_1/texture = ExtResource("3_d7ypv")
 frame_1/duration = 1.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7ypv"]
-bg_color = Color(0.518503, 0.518503, 0.518503, 1)
+[sub_resource type="Theme" id="Theme_d7ypv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d7ypv"]
+font_size = 56
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -23,6 +78,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_env85")
+portrait_lookup = Dictionary[String, AnimatedTexture]({
+"giorgi": SubResource("AnimatedTexture_78h74"),
+"guillaume": SubResource("AnimatedTexture_7ldgf"),
+"inshal": SubResource("AnimatedTexture_ivri2"),
+"jonas": SubResource("AnimatedTexture_wxqkm"),
+"louis": SubResource("AnimatedTexture_8sb1s"),
+"tommaso": SubResource("AnimatedTexture_yre64")
+})
+contributor_quote_lookup = Dictionary[String, String]({
+"giorgi": "coffee to go",
+"guillaume": "gdd",
+"inshal": "admiral ackbar",
+"jonas": "no jokes allowed",
+"louis": "one man army",
+"tommaso": "can you hear that?"
+})
 
 [node name="ViewportSurrounding" type="TextureRect" parent="."]
 layout_mode = 1
@@ -34,19 +106,18 @@ grow_vertical = 2
 texture = ExtResource("1_73jnp")
 expand_mode = 1
 
-[node name="FaceSurrounding" type="TextureRect" parent="."]
-clip_contents = true
-layout_mode = 0
-offset_left = 711.0
-offset_top = 980.0
-offset_right = 1011.0
-offset_bottom = 1280.0
+[node name="DialogBox" type="Node2D" parent="."]
+position = Vector2(697, 1055)
+
+[node name="FaceSurrounding" type="TextureRect" parent="DialogBox"]
+offset_right = 300.0
+offset_bottom = 300.0
+mouse_force_pass_scroll_events = false
 texture = ExtResource("2_448xx")
 
-[node name="Face" type="TextureRect" parent="FaceSurrounding"]
+[node name="Face" type="TextureRect" parent="DialogBox/FaceSurrounding"]
 z_index = -1
-layout_mode = 1
-anchors_preset = 15
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 15.0
@@ -58,18 +129,17 @@ grow_vertical = 2
 texture = SubResource("AnimatedTexture_mbxvq")
 expand_mode = 1
 
-[node name="Panel" type="Panel" parent="FaceSurrounding"]
-layout_mode = 0
-offset_left = 351.0
-offset_right = 1167.0
-offset_bottom = 299.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d7ypv")
+[node name="Panel" type="Panel" parent="DialogBox"]
+offset_left = 316.0
+offset_right = 1116.0
+offset_bottom = 300.0
+theme = SubResource("Theme_d7ypv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="FaceSurrounding/Panel"]
-layout_mode = 2
-offset_left = 248.0
-offset_top = 129.0
-offset_right = 856.0
-offset_bottom = 389.0
-text = "I am such a smart guy!!"
-tab_size = 2
+[node name="Label" type="Label" parent="DialogBox/Panel"]
+layout_mode = 0
+offset_left = 9.0
+offset_right = 799.0
+offset_bottom = 300.0
+text = "I am the schmartest bear in the room"
+label_settings = SubResource("LabelSettings_d7ypv")
+autowrap_mode = 2
