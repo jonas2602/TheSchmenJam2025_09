@@ -8,6 +8,7 @@ extends Node
 @onready var occupation_layer      : TileMapLayer = $GameMap/Occupation
 @onready var guards_root           : Node2D       = $GameMap/Guards
 @onready var main_map              : Node2D       = $GameMap
+@onready var game_hud              : Control      = $Camera/CanvasLayer/Hud
 
 var _tiles_to_conquer_list      : Array[Vector2i]
 var _total_tiles_to_conquer     : int = 0
@@ -119,3 +120,9 @@ func _handle_activation_tile(activate_name : String):
 		_activate_map(map_name)
 		return
 	
+	if (activate_name.begins_with("credit_")):
+		var contributor_name : String = activate_name.substr(len("credit_"))
+		game_hud._play_credit_quote(contributor_name)
+		return
+	
+	print("unknown action for: ", activate_name)
