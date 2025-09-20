@@ -2,7 +2,7 @@ extends Node
 
 @export var rotation_speed  : float = 4.0
 @export var target_rotation : float = 0
-@export var GlobalEventSystem.faction_id_player : int   = GlobalEventSystem.faction_id_neutral
+@export var faction_id_guard : int   = GlobalEventSystem.faction_id_neutral
 
 @export var rotation_delay_min    : float = 2
 @export var rotation_delay_max    : float = 5
@@ -21,7 +21,7 @@ func _initialize_guard(main_map : Node2D):
 	game_map = get_tree().get_root().find_child("GameMap", true, false)
 	
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
-	GlobalEventSystem.faction_id_player = game_map._get_cell_faction(self_tile_pos)
+	faction_id_guard = game_map._get_cell_faction(self_tile_pos)
 	
 	vision_cone_area.monitoring  = true
 	vision_cone_area.monitorable = true
