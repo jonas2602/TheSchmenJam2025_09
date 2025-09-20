@@ -18,8 +18,8 @@ func _copy_cell(source_layer : TileMapLayer, source_coords : Vector2i, target_la
 	var alternative_tile : int = source_layer.get_cell_alternative_tile(source_coords)
 	target_layer.set_cell(target_coords, source_id, atlas_coords, alternative_tile)
 	
-func _activate_map(name : String) -> void:
-	var level_prefab : Node   = level_lookup.get(name)
+func _activate_map(map_name : String) -> void:
+	var level_prefab : Node   = level_lookup.get(map_name)
 	var level_offset : Vector2i = main_map._get_coords_for_world_pos(level_prefab.position)
 	
 	var prefab_terrain_base_layer    : TileMapLayer = level_prefab.find_child(terrain_base_layer.name, true, false)
