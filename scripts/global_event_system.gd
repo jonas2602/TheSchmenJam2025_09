@@ -12,6 +12,7 @@ static var last_conquered_tile_pos = invalid_tile_pos
 signal hovered_tile_changed(tile_pos : Vector2i)
 signal clicked_tile(tile_pos : Vector2i)
 signal conquered_tile(src_tile_pos : Vector2i, dst_tile_pos : Vector2i)
+@warning_ignore("unused_signal")
 signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
 
 
@@ -24,7 +25,7 @@ func _init() -> void:
 	pass
 
 func _on_hovered_tile_changed(tile_pos : Vector2i):
-	print("Changing hovered tile from ", hovered_tile_pos, " to ", tile_pos)
+	#print("Changing hovered tile from ", hovered_tile_pos, " to ", tile_pos)
 	hovered_tile_pos = tile_pos
 	pass
 
@@ -33,7 +34,7 @@ func _on_tile_clicked(tile_pos : Vector2i):
 	last_clicked_tile_pos = tile_pos
 	pass
 
-func _on_tile_conquered(tile_pos : Vector2i):
-	print("Last conquered tile changed from ", last_conquered_tile_pos, " to ", tile_pos)
-	last_conquered_tile_pos = tile_pos
+func _on_tile_conquered(_src_tile_pos : Vector2i, dst_tile_pos : Vector2i):
+	print("Last conquered tile changed from ", last_conquered_tile_pos, " to ", dst_tile_pos)
+	last_conquered_tile_pos = dst_tile_pos
 	pass
