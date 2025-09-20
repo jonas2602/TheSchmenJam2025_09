@@ -33,7 +33,7 @@ func _activate_map(map_name : String) -> void:
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
 		_copy_cell(prefab_occupation_layer, source_coords, occupation_layer, source_coords + level_offset)
 
-func _on_conquered_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	var activate_name : String = main_map._get_cell_activate_name(attack_target_pos)
 	if (activate_name.is_empty()):
 		return
