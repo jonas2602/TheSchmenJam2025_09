@@ -18,9 +18,9 @@ func _copy_cell(source_layer : TileMapLayer, source_coords : Vector2i, target_la
 	var atlas_coords : Vector2i = source_layer.get_cell_atlas_coords(source_coords)
 	var alternative_tile : int = source_layer.get_cell_alternative_tile(source_coords)
 	target_layer.set_cell(target_coords, source_id, atlas_coords, alternative_tile)
-	
-func _activate_map(name : String) -> void:
-	var level_prefab : Node2D   = level_lookup.get(name)
+
+func _activate_map(map_name : String) -> void:
+	var level_prefab : Node   = level_lookup.get(map_name)
 	var level_offset : Vector2i = main_map._get_coords_for_world_pos(level_prefab.position)
 	
 	# copy terrain over
