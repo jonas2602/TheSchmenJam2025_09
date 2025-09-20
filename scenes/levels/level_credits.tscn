@@ -15,4 +15,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAQADAAEAAAAAAAEAAQABAAIAAAABAAAAAQACAAA
 [node name="TerrainFeatures" parent="GameMap" index="2"]
 tile_map_data = PackedByteArray("AAAFAAEAAQAAAAQAAQALAAAAAQADAAQAAgAJAP7/AQABAAQAAgAJAAIAAQACAAQAAQAFAAQAAQABAAQAAQAIAAAAAQACAAQAAgA=")
 
+[node name="Flag" parent="GameMap" index="6"]
+visible = false
+
 [editable path="GameMap"]

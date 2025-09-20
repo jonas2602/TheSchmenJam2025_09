@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://4xl7bkywymmj"]
+[gd_scene load_steps=6 format=3 uid="uid://4xl7bkywymmj"]
 
 [ext_resource type="TileSet" uid="uid://bc6ektqhekkg4" path="res://assets/Tiles/faction_tile_set.tres" id="1_blljc"]
 [ext_resource type="TileSet" uid="uid://bb53f1310v07u" path="res://assets/Tiles/map_tile_set.tres" id="2_blljc"]
 [ext_resource type="PackedScene" uid="uid://k170362tkn4l" path="res://scenes/test_map_layer.tscn" id="4_lcsrr"]
+[ext_resource type="PackedScene" uid="uid://dihnlw6rp7s6f" path="res://prefabs/flag.tscn" id="5_132ng"]
 [ext_resource type="TileSet" uid="uid://cmue5u3jct2yf" path="res://assets/Tiles/select_tile_set.tres" id="6_80ckm"]
 
 [node name="GameMap" type="Node2D"]
@@ -25,3 +26,5 @@ tile_set = ExtResource("6_80ckm")
 tile_set = ExtResource("6_80ckm")
 
 [node name="Guards" type="Node2D" parent="."]
+
+[node name="Flag" parent="." instance=ExtResource("5_132ng")]

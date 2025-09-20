@@ -71,11 +71,22 @@ func _activate_map(map_name : String) -> void:
 		_total_tiles_to_conquer -= 1
 		_tiles_to_conquer_list.erase(occupation_layer.local_to_map(global_transform.get_origin()))
 	
+	
 	# multiply by the required percentage to get the goal
 	_total_tiles_to_conquer = floori(_total_tiles_to_conquer * conquer_tiles_percentage)
 	_remaining_tiles_to_conquer = _total_tiles_to_conquer
+	GlobalEventSystem.remaining_tiles_to_conquer = _remaining_tiles_to_conquer
 	
 	print("Tile to win: ", _total_tiles_to_conquer)
+	
+	# spawn the goal flag if it is not explicitly hidden by th designer
+	var goal_flag : Node2D = level_prefab.find_child("Flag", true, false)
+	if goal_flag.visible:
+		var flag_global_transform : Transform2D = goal_flag.get_global_transform()
+		var new_flag : Node2D = goal_flag.duplicate()
+		add_child(new_flag)
+		new_flag.global_transform = flag_global_transform
+		new_flag.set_flag_tile(occupation_layer.local_to_map(flag_global_transform.get_origin()))
 
 func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	var activate_name : String = main_map._get_cell_activate_name(attack_target_pos)
@@ -96,7 +107,8 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 	
 	if (_remaining_tiles_to_conquer != 0):
 		print("Tile to win: ", _remaining_tiles_to_conquer)
-		GlobalEventSystem.remaining_tiles_to_conquer_changed.emit(_remaining_tiles_to_conquer)
+		GlobalEventSystem.remaining_tiles_to_conquer = _remaining_tiles_to_conquer
+		GlobalEventSystem.remaining_tiles_to_conquer_changed.emit()
 		pass
 	else: # player has achieved the goal, emit win event
 		print("You win!")

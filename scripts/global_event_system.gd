@@ -5,9 +5,10 @@ const faction_id_neutral : int = -1
 const faction_id_player  : int = 0
 
 
-static var hovered_tile_pos        = invalid_tile_pos
-static var last_clicked_tile_pos   = invalid_tile_pos
-static var last_conquered_tile_pos = invalid_tile_pos
+static var hovered_tile_pos        : Vector2i = invalid_tile_pos
+static var last_clicked_tile_pos   : Vector2i = invalid_tile_pos
+static var last_conquered_tile_pos : Vector2i = invalid_tile_pos
+static var remaining_tiles_to_conquer : int   = 0
 
 
 signal hovered_tile_changed(tile_pos : Vector2i)
@@ -15,7 +16,7 @@ signal clicked_tile(tile_pos : Vector2i)
 signal conquered_tile(src_tile_pos : Vector2i, dst_tile_pos : Vector2i)
 @warning_ignore("unused_signal")
 signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
-signal remaining_tiles_to_conquer_changed(remaining_tiles : int)
+signal remaining_tiles_to_conquer_changed()
 signal level_complete()
 
 

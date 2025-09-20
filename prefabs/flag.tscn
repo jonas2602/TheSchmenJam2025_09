@@ -1,0 +1,96 @@
+[gd_scene load_steps=16 format=3 uid="uid://dihnlw6rp7s6f"]
+
+[ext_resource type="Texture2D" uid="uid://b535elwsdi8d8" path="res://assets/Flag/Flag_Blue_Frame1.png" id="1_2uxvf"]
+[ext_resource type="Texture2D" uid="uid://dp6y61eskk6tq" path="res://assets/Flag/Flag_Blue_Frame2.png" id="2_im5xd"]
+[ext_resource type="Texture2D" uid="uid://catqsfwledpm4" path="res://assets/Flag/Flag_Blue_Frame3.png" id="3_7ediq"]
+[ext_resource type="Texture2D" uid="uid://u674xff4ollx" path="res://assets/Flag/Flag_Blue_Frame4.png" id="4_8s74t"]
+[ext_resource type="Texture2D" uid="uid://dkta1tw2xvupt" path="res://assets/Flag/Flag_Default_Frame1.png" id="5_eb785"]
+[ext_resource type="Texture2D" uid="uid://ge0r7uijitxv" path="res://assets/Flag/Flag_Default_Frame2.png" id="6_ylcxt"]
+[ext_resource type="Texture2D" uid="uid://3f10ehr2y28u" path="res://assets/Flag/Flag_Default_Frame3.png" id="7_5uc4s"]
+[ext_resource type="Texture2D" uid="uid://cn167t3gnjq88" path="res://assets/Flag/Flag_Default_Frame4.png" id="8_71mf4"]
+[ext_resource type="Texture2D" uid="uid://b18op4ovsflux" path="res://assets/Flag/Flag_Red_Frame1.png" id="9_1kxts"]
+[ext_resource type="Texture2D" uid="uid://dtxmlr4u7qdem" path="res://assets/Flag/Flag_Red_Frame2.png" id="10_o0w7r"]
+[ext_resource type="Texture2D" uid="uid://c8no7yl5r2nsb" path="res://assets/Flag/Flag_Red_Frame3.png" id="11_3dmlf"]
+[ext_resource type="Texture2D" uid="uid://3cpruqyhi6kb" path="res://assets/Flag/Flag_Red_Frame4.png" id="12_qj63o"]
+[ext_resource type="Script" uid="uid://cuui7hqa5fhpd" path="res://scripts/goal_flag.gd" id="13_nrr3a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y3vue"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2uxvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_im5xd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7ediq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8s74t")
+}],
+"loop": true,
+"name": &"allied",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_eb785")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ylcxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5uc4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_71mf4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_1kxts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_o0w7r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_3dmlf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_qj63o")
+}],
+"loop": true,
+"name": &"faction_1",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q4cw7"]
+font_size = 64
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.839216)
+
+[node name="Flag" type="Node2D"]
+script = ExtResource("13_nrr3a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_y3vue")
+animation = &"allied"
+frame_progress = 0.517393
+
+[node name="Label" type="Label" parent="."]
+offset_left = -663.0
+offset_top = -304.0
+offset_right = 652.0
+offset_bottom = -114.0
+text = "Capture the flag"
+label_settings = SubResource("LabelSettings_q4cw7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="ready" from="Label" to="Label" method="_on_ready"]
