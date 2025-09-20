@@ -12,6 +12,7 @@ static var last_conquered_tile_pos = invalid_tile_pos
 signal hovered_tile_changed(tile_pos : Vector2i)
 signal clicked_tile(tile_pos : Vector2i)
 signal conquered_tile(src_tile_pos : Vector2i, dst_tile_pos : Vector2i)
+@warning_ignore("unused_signal")
 signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
 
 
