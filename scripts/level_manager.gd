@@ -13,6 +13,8 @@ extends Node
 var _tiles_to_conquer_list      : Array[Vector2i]
 var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
+var _max_player_detects_allowed : int = 0
+var _current_player_detects     : int = 0
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
@@ -75,8 +77,12 @@ func _activate_map(map_name : String) -> void:
 	# multiply by the required percentage to get the goal
 	_total_tiles_to_conquer = floori(_total_tiles_to_conquer * conquer_tiles_percentage)
 	_remaining_tiles_to_conquer = _total_tiles_to_conquer
-	
 	print("Tile to win: ", _total_tiles_to_conquer)
+	
+	_max_player_detects_allowed = _total_tiles_to_conquer / 10
+	_current_player_detects     = 0
+	print("Detects to loose: ", _max_player_detects_allowed + 1)
+	
 
 func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	var activate_name : String = main_map._get_cell_activate_name(attack_target_pos)
@@ -126,3 +132,11 @@ func _handle_activation_tile(activate_name : String):
 		return
 	
 	print("unknown action for: ", activate_name)
+
+func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+	_current_player_detects += 1
+	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
+	
+	if (_current_player_detects > _max_player_detects_allowed):
+		print("You loose!")
+		GlobalEventSystem.level_failed.emit()
