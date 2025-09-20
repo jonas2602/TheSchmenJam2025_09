@@ -10,6 +10,7 @@ extends Node
 @export var rotation_delay_detect : float = 4
 
 @onready var sprite_rect_node : AnimatedSprite2D = $AnimatedSprite2D
+@onready var vision_cone_area : Area2D = $VisionCone2D/VisionConeArea
 
 var game_map : Node2D = null
 
@@ -21,6 +22,9 @@ func _initialize_guard(main_map : Node2D):
 	
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
 	self_faction_id = game_map._get_cell_faction(self_tile_pos)
+	
+	vision_cone_area.monitoring  = true
+	vision_cone_area.monitorable = true
 	
 	rotation_delay_active = randf_range(rotation_delay_min, rotation_delay_max)
 	$Timer.start(rotation_delay_detect)

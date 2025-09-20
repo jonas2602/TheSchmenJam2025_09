@@ -55,7 +55,7 @@ color = Color(0.447059, 0.113725, 0.0980392, 0.709804)
 
 [node name="VisionConeArea" parent="VisionCone2D" index="1"]
 collision_layer = 1
-monitorable = true
+monitoring = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = -1.5708
