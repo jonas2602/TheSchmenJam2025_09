@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cbx3ik61j0d5u"]
+[gd_scene load_steps=28 format=3 uid="uid://cbx3ik61j0d5u"]
 
 [ext_resource type="Texture2D" uid="uid://ysnh0l2hbk1j" path="res://assets/UI/WindowSurrounding.png" id="1_73jnp"]
 [ext_resource type="Script" uid="uid://pbofoobfj33k" path="res://scripts/hud_controller.gd" id="1_env85"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://b845fpd44snsw" path="res://assets/Faces/Louis/Louis_frame0001.png" id="11_jvdik"]
 [ext_resource type="Texture2D" uid="uid://bw565to576dys" path="res://assets/Faces/Tommaso/Tommaso_frame0000.png" id="12_ks61j"]
 [ext_resource type="Texture2D" uid="uid://cpay2ga3e56q" path="res://assets/Faces/Tommaso/Tommaso_frame0001.png" id="13_iobtr"]
+[ext_resource type="Texture2D" uid="uid://djfpiasvbkkoy" path="res://assets/Faces/OldMan/OldMan_frame0000.png" id="14_wdagf"]
+[ext_resource type="Texture2D" uid="uid://d2ksx1ks6mbyt" path="res://assets/Faces/OldMan/OldMan_frame0001.png" id="15_v1lt8"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_78h74"]
 frames = 2
@@ -51,6 +53,13 @@ frame_0/texture = ExtResource("10_8w8hc")
 frame_1/texture = ExtResource("11_jvdik")
 frame_1/duration = 1.0
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_cl3kh"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("14_wdagf")
+frame_1/texture = ExtResource("15_v1lt8")
+frame_1/duration = 1.0
+
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_yre64"]
 frames = 2
 speed_scale = 3.0
@@ -85,6 +94,7 @@ portrait_lookup = Dictionary[String, AnimatedTexture]({
 "inshal": SubResource("AnimatedTexture_ivri2"),
 "jonas": SubResource("AnimatedTexture_wxqkm"),
 "louis": SubResource("AnimatedTexture_8sb1s"),
+"oldman": SubResource("AnimatedTexture_cl3kh"),
 "tommaso": SubResource("AnimatedTexture_yre64")
 })
 contributor_quote_lookup = Dictionary[String, String]({
@@ -95,6 +105,7 @@ contributor_quote_lookup = Dictionary[String, String]({
 "louis": "one man army",
 "tommaso": "can you hear that?"
 })
+arr_enemy_quotes = Array[String](["you will never get here", "try again if you are  brave enough", "didn't expect anything else"])
 
 [node name="ViewportSurrounding" type="TextureRect" parent="."]
 layout_mode = 1
@@ -143,3 +154,7 @@ offset_bottom = 300.0
 text = "I am the schmartest bear in the room"
 label_settings = SubResource("LabelSettings_d7ypv")
 autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
