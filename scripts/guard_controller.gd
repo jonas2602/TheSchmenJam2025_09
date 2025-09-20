@@ -10,19 +10,31 @@ extends Node
 @export var rotation_delay_detect : float = 4
 
 @onready var sprite_rect_node : AnimatedSprite2D = $AnimatedSprite2D
+@onready var vision_cone_area : Area2D = $VisionCone2D/VisionConeArea
 
-@onready var game_map : Node = get_tree().get_root().find_child("GameMap", true, false)
+var game_map : Node2D = null
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+var initialized : bool = false
+
+
+func _initialize_guard(main_map : Node2D):
+	game_map = get_tree().get_root().find_child("GameMap", true, false)
+	
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
 	GlobalEventSystem.faction_id_player = game_map._get_cell_faction(self_tile_pos)
 	
+	vision_cone_area.monitoring  = true
+	vision_cone_area.monitorable = true
+	
 	rotation_delay_active = randf_range(rotation_delay_min, rotation_delay_max)
 	$Timer.start(rotation_delay_detect)
+	initialized = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if (initialized == false):
+		return
+	
 	if (self.rotation_degrees == target_rotation):
 		return
 	
@@ -42,6 +54,9 @@ func _on_timer_timeout():
 	pass
 
 func _on_vision_cone_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if (initialized == false):
+		return
+	
 	var other : Node2D = area.get_owner()
 	if (!other.name.begins_with("Vehicle")):
 		return # collision with another guard

@@ -23,3 +23,5 @@ tile_set = ExtResource("6_80ckm")
 
 [node name="Hover" parent="." instance=ExtResource("4_lcsrr")]
 tile_set = ExtResource("6_80ckm")
+
+[node name="Guards" type="Node2D" parent="."]

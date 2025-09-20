@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbx3ik61j0d5u"]
+
+[ext_resource type="Texture2D" uid="uid://ysnh0l2hbk1j" path="res://assets/UI/WindowSurrounding.png" id="1_73jnp"]
+[ext_resource type="Texture2D" uid="uid://dklu0344n8cv1" path="res://assets/UI/Head_Display.png" id="2_448xx"]
+[ext_resource type="Texture2D" uid="uid://bpvaxpaddy1j8" path="res://assets/Faces/Inshal/Inshal_Glasses_frame0001.png" id="3_d7ypv"]
+[ext_resource type="Texture2D" uid="uid://b8bxkb0c385xm" path="res://assets/Faces/Inshal/Inshal_Glasses_frame0000.png" id="3_env85"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_mbxvq"]
+frames = 2
+speed_scale = 3.0
+frame_0/texture = ExtResource("3_env85")
+frame_1/texture = ExtResource("3_d7ypv")
+frame_1/duration = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d7ypv"]
+bg_color = Color(0.518503, 0.518503, 0.518503, 1)
+
+[node name="Hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ViewportSurrounding" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_73jnp")
+expand_mode = 1
+
+[node name="FaceSurrounding" type="TextureRect" parent="."]
+clip_contents = true
+layout_mode = 0
+offset_left = 711.0
+offset_top = 980.0
+offset_right = 1011.0
+offset_bottom = 1280.0
+texture = ExtResource("2_448xx")
+
+[node name="Face" type="TextureRect" parent="FaceSurrounding"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AnimatedTexture_mbxvq")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="FaceSurrounding"]
+layout_mode = 0
+offset_left = 351.0
+offset_right = 1167.0
+offset_bottom = 299.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d7ypv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="FaceSurrounding/Panel"]
+layout_mode = 2
+offset_left = 248.0
+offset_top = 129.0
+offset_right = 856.0
+offset_bottom = 389.0
+text = "I am such a smart guy!!"
+tab_size = 2
