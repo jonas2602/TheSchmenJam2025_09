@@ -22,6 +22,7 @@ func _initialize_guard(main_map : Node2D):
 	
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
 	faction_id_guard = game_map._get_cell_faction(self_tile_pos)
+	game_map._toggle_cell_blocked(self_tile_pos, true)
 	
 	vision_cone_area.monitoring  = true
 	vision_cone_area.monitorable = true

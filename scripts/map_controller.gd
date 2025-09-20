@@ -12,6 +12,7 @@ extends Node2D
 const atlas_coords_hovered_other   : Vector2i = Vector2i(0, 1)
 const atlas_coords_hovered_self    : Vector2i = Vector2i(0, 1)
 const atlas_coords_hovered_neutral : Vector2i = Vector2i(0, 3)
+const atlas_coords_hovered_blocked : Vector2i = Vector2i(0, 3)
 
 const atlas_coords_selected_self  : Vector2i = Vector2i(0, 0)
 const atlas_coords_selected_other : Vector2i = Vector2i(0, 0)
@@ -40,6 +41,20 @@ func _get_cell_faction(cell_pos : Vector2i) -> int:
 	
 	var faction_id : int = cell_data.get_custom_data("faction_id")
 	return faction_id
+	
+func _toggle_cell_blocked(cell_pos : Vector2i, blocked : bool) -> void:
+	var cell_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(cell_pos)
+	var cell_source_id : int = occupation_layer.get_cell_source_id(cell_pos)
+	var cell_alternative : int = 1 if blocked else 0
+	occupation_layer.set_cell(cell_pos, cell_source_id, cell_atlas_coords, cell_alternative)
+	
+func _get_cell_blocked(cell_pos : Vector2i) -> bool:
+	var cell_data : TileData = occupation_layer.get_cell_tile_data(cell_pos)
+	if (cell_data == null):
+		return GlobalEventSystem.faction_id_neutral # cell is not marked up for a faction
+	
+	var is_blocked : bool = cell_data.get_custom_data("blocked")
+	return is_blocked
 
 func _get_cell_activate_name(cell_pos : Vector2i) -> String:
 	var cell_data : TileData = terrain_feature_layer.get_cell_tile_data(cell_pos)
@@ -63,9 +78,12 @@ func _update_hovered_tile(old_cell_pos : Vector2i, new_cell_pos : Vector2i) -> v
 		hover_layer.set_cell(old_cell_pos, -1)
 	
 	var new_cell_faction : int = _get_cell_faction(new_cell_pos)
+	var new_cell_blocked : bool = _get_cell_blocked(new_cell_pos)
 	var hovered_atlas_coords : Vector2i = atlas_coords_hovered_self
 	if (new_cell_faction == GlobalEventSystem.faction_id_neutral):
 		hovered_atlas_coords = atlas_coords_hovered_neutral # hovered cell is not marked up for a faction
+	elif (new_cell_blocked):
+		hovered_atlas_coords = atlas_coords_hovered_blocked # hovered cell got disabled (e.g. due to guard on it)
 	elif (new_cell_faction != GlobalEventSystem.faction_id_player):
 		hovered_atlas_coords = atlas_coords_hovered_other # hovered cell is occupied by an enemy faction
 	
@@ -104,6 +122,9 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 	if (cell_faction == GlobalEventSystem.faction_id_neutral):
 		return
 	
+	if (_get_cell_blocked(new_cell_pos)):
+		return # cell is blocked (e.g. by guard)
+
 	# reset attack tiles when selecting them again
 	if (new_cell_pos == attack_cell_origin):
 		interaction_layer.set_cell(attack_cell_origin, -1)
