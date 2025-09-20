@@ -1,7 +1,8 @@
 extends Node
 
 static var invalid_tile_pos : Vector2i = Vector2i.MAX
-static var faction_id_neutral : int    = -1
+const faction_id_neutral : int = -1
+const faction_id_player  : int = 0
 
 
 static var hovered_tile_pos        = invalid_tile_pos

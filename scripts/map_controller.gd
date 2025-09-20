@@ -1,7 +1,6 @@
 extends Node2D
 
 @export var base_capture_time : float = 3.0
-@export var self_faction_id : int = 0
 @export var conquering_vehicle : PackedScene
 
 @onready var terrain_base_layer    : TileMapLayer = $BaseTerrain
@@ -67,7 +66,7 @@ func _update_hovered_tile(old_cell_pos : Vector2i, new_cell_pos : Vector2i) -> v
 	var hovered_atlas_coords : Vector2i = atlas_coords_hovered_self
 	if (new_cell_faction == GlobalEventSystem.faction_id_neutral):
 		hovered_atlas_coords = atlas_coords_hovered_neutral # hovered cell is not marked up for a faction
-	elif (new_cell_faction != self_faction_id):
+	elif (new_cell_faction != GlobalEventSystem.faction_id_player):
 		hovered_atlas_coords = atlas_coords_hovered_other # hovered cell is occupied by an enemy faction
 	
 	hover_layer.set_cell(new_cell_pos, 0, hovered_atlas_coords, 0)
@@ -119,10 +118,10 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 	if (_involved_in_attack(new_cell_pos)):
 		return # can't reselect tiles while they are involved in an attack
 	
-	if (cell_faction == self_faction_id):
+	if (cell_faction == GlobalEventSystem.faction_id_player):
 		if (attack_cell_target != GlobalEventSystem.invalid_tile_pos && !_is_neighbor_cell(attack_cell_target, new_cell_pos)):
 			return # not a neighbor of the already selected target tile
-		if (!_is_border_tile(new_cell_pos, self_faction_id, false)):
+		if (!_is_border_tile(new_cell_pos, GlobalEventSystem.faction_id_player, false)):
 			return # you can only attack tiles at your border
 		
 		interaction_layer.set_cell(attack_cell_origin, -1)
@@ -132,7 +131,7 @@ func _update_attack_tiles(new_cell_pos : Vector2i) -> void:
 	else:
 		if (attack_cell_origin != GlobalEventSystem.invalid_tile_pos && !_is_neighbor_cell(attack_cell_origin, new_cell_pos)):
 			return # not a neighbor of the already selected origin tile
-		if (!_is_border_tile(new_cell_pos, self_faction_id, true)):
+		if (!_is_border_tile(new_cell_pos, GlobalEventSystem.faction_id_player, true)):
 			return # you can only attack tiles at your border
 		
 		interaction_layer.set_cell(attack_cell_target, -1)

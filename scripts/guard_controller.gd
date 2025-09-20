@@ -2,7 +2,7 @@ extends Node
 
 @export var rotation_speed  : float = 4.0
 @export var target_rotation : float = 0
-@export var self_faction_id : int   = GlobalEventSystem.faction_id_neutral
+@export var GlobalEventSystem.faction_id_player : int   = GlobalEventSystem.faction_id_neutral
 
 @export var rotation_delay_min    : float = 2
 @export var rotation_delay_max    : float = 5
@@ -16,7 +16,7 @@ extends Node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
-	self_faction_id = game_map._get_cell_faction(self_tile_pos)
+	GlobalEventSystem.faction_id_player = game_map._get_cell_faction(self_tile_pos)
 	
 	rotation_delay_active = randf_range(rotation_delay_min, rotation_delay_max)
 	$Timer.start(rotation_delay_detect)
