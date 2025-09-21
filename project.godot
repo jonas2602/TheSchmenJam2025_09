@@ -19,11 +19,6 @@ config/icon="res://icon.svg"
 
 GlobalEventSystem="*res://scripts/global_event_system.gd"
 
-[display]
-
-window/size/viewport_width=2560
-window/size/viewport_height=1440
-
 [input]
 
 drag={
