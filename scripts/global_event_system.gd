@@ -9,6 +9,7 @@ static var hovered_tile_pos        : Vector2i = invalid_tile_pos
 static var last_clicked_tile_pos   : Vector2i = invalid_tile_pos
 static var last_conquered_tile_pos : Vector2i = invalid_tile_pos
 static var remaining_tiles_to_conquer : int   = 0
+static var remaining_detections       : int   = 0
 
 
 signal hovered_tile_changed(tile_pos : Vector2i)
@@ -22,6 +23,8 @@ signal remaining_tiles_to_conquer_changed()
 signal level_complete()
 @warning_ignore("unused_signal") # suppress false positive
 signal level_failed()
+@warning_ignore("unused_signal") # suppress false positive
+signal remaining_detections_changed(remaining_detections : int)
 
 
 # Various handlers to cache the state global state for other scripts

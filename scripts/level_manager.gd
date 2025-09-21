@@ -90,9 +90,11 @@ func _activate_map(map_name : String) -> void:
 	print("Tile to win: ", _total_tiles_to_conquer)
 	
 	@warning_ignore("integer_division") # suppress warning here as this is intentional
-	_max_player_detects_allowed = _total_tiles_to_conquer / 10
+	_max_player_detects_allowed = _total_tiles_to_conquer / 10 + 1
 	_current_player_detects     = 0
-	print("Detects to loose: ", _max_player_detects_allowed + 1)
+	print("Detects to lose: ", _max_player_detects_allowed)
+	GlobalEventSystem.remaining_detections = _max_player_detects_allowed
+	GlobalEventSystem.remaining_detections_changed.emit()
 	
 	# spawn the goal flag if it is not explicitly hidden by th designer
 	var goal_flag : Node2D = level_prefab.find_child("Flag", true, false)
@@ -173,9 +175,12 @@ func _handle_activation_tile(activate_name : String):
 
 func _on_conquer_aborted(_attack_origin_pos : Vector2i, _attack_target_pos : Vector2i):
 	_current_player_detects += 1
-	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
+	GlobalEventSystem.remaining_detections = _max_player_detects_allowed - _current_player_detects
+	print("Detects left: ", GlobalEventSystem.remaining_detections)
 	game_hud._play_random_enemy_quote()
 	
-	if (_current_player_detects > _max_player_detects_allowed):
-		print("You loose!")
+	GlobalEventSystem.remaining_detections_changed.emit()
+	
+	if (GlobalEventSystem.remaining_detections == 0):
+		print("You lose!")
 		GlobalEventSystem.level_failed.emit()
