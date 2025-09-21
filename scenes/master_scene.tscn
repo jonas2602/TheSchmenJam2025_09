@@ -70,6 +70,15 @@ position = Vector2(-1615.77, -1727.27)
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
 
 [node name="Hud" parent="Camera/CanvasLayer" instance=ExtResource("13_j4w6v")]
+contributor_quote_lookup = Dictionary[String, String]({
+"giorgi": "Coffee to go.",
+"guillaume": "Someone has to manage it.",
+"inshal": "Stay in school, nerds.",
+"jonas": "No jokes please!",
+"louis": "Discover, Understand, Improve!",
+"tommaso": "Can you hear that?"
+})
+arr_enemy_quotes = Array[String](["You will never get here!", "Try again, if you are  brave enough.", "Didn't expect anything else from the likes of you.", "Uh uh uh! Don't you dare!", "What the hell?! My friend is sunbathing there!", "Hey, hands off. I called dibs on that.", "Aha! Caught you red-handed.", "Thought you were being sneaky, eh?"])
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 autoplay = true
