@@ -70,7 +70,7 @@ func _activate_map(map_name : String) -> void:
 		var new_guard : Node2D = guard.duplicate()
 		guards_root.add_child(new_guard)
 		new_guard.global_transform = global_transform
-		new_guard._initialize_guard(main_map)
+		new_guard._initialize_guard()
 		
 		# guard tiles cannot be conquered so decrement
 		_total_tiles_to_conquer -= 1
@@ -84,6 +84,7 @@ func _activate_map(map_name : String) -> void:
 	
 	print("Tile to win: ", _total_tiles_to_conquer)
 	
+	@warning_ignore("integer_division") # suppress warning here as this is intentional
 	_max_player_detects_allowed = _total_tiles_to_conquer / 10
 	_current_player_detects     = 0
 	print("Detects to loose: ", _max_player_detects_allowed + 1)
@@ -162,7 +163,7 @@ func _handle_activation_tile(activate_name : String):
 	
 	print("unknown action for: ", activate_name)
 
-func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+func _on_conquer_aborted(_attack_origin_pos : Vector2i, _attack_target_pos : Vector2i):
 	_current_player_detects += 1
 	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
 	game_hud._play_random_enemy_quote()
