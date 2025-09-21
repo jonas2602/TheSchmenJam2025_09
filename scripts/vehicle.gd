@@ -4,6 +4,7 @@ extends Node2D
 var info : VehicleInfo = VehicleInfo.new()
 var _time : float = 0
 
+const guard_class = preload("res://scripts/guard_controller.gd")
 @onready var sprite : Sprite2D = $Sprite2D
 
 func _ready() -> void:
@@ -36,9 +37,10 @@ func _on_reach_destination():
 	pass
 
 func _on_area_2d_area_entered(area : Area2D):
-	var other : Node = area.get_owner().get_owner()
+	var other = area.get_owner().get_owner()
+	
 	print(name, " from ", info.src_tile_coords, " to ", info.dst_tile_coords, " caught by " + other.name)
-	assert(other.name.begins_with("Guard"))
+	assert(other is guard_class)
 
 	# Handle "collision" with player
 	GlobalEventSystem.player_conquer_stopped.emit(info.src_tile_coords, info.dst_tile_coords)
