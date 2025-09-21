@@ -42,6 +42,14 @@ func _get_cell_faction(cell_pos : Vector2i) -> int:
 	var faction_id : int = cell_data.get_custom_data("faction_id")
 	return faction_id
 	
+func _get_cell_complexity(cell_pos : Vector2i) -> int:
+	var cell_data : TileData = terrain_feature_layer.get_cell_tile_data(cell_pos)
+	if (cell_data == null):
+		return 1.0 # cell has no special complexity
+	
+	var complexity : float = cell_data.get_custom_data("complexity")
+	return complexity
+	
 func _toggle_cell_blocked(cell_pos : Vector2i, blocked : bool) -> void:
 	var cell_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(cell_pos)
 	var cell_source_id : int = occupation_layer.get_cell_source_id(cell_pos)
@@ -209,6 +217,8 @@ func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2
 	interaction_layer.set_cell(attack_origin_pos, 0, atlas_coords_active_attack_self, 0)
 	interaction_layer.set_cell(attack_target_pos, 0, atlas_coords_active_attack_other, 0)
 	
+	var target_complexity : float = _get_cell_complexity(attack_target_pos)
+	
 	# Spawn the truck
 	var info : VehicleInfo = VehicleInfo.new()
 	info.src_tile_coords = attack_origin_pos
@@ -216,7 +226,7 @@ func _start_conquering(attack_origin_pos : Vector2i, attack_target_pos : Vector2
 	info.src_position    = occupation_layer.map_to_local(attack_origin_pos)
 	info.dst_position    = occupation_layer.map_to_local(attack_target_pos)
 	# TODO: Take terrain features into account
-	info.seconds_to_destination = 3
+	info.seconds_to_destination = 3 * target_complexity
 	info.target_faction_id = cell_faction
 	
 	var truck = conquering_vehicle.instantiate()
