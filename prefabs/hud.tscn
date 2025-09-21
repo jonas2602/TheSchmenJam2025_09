@@ -99,11 +99,11 @@ portrait_lookup = Dictionary[String, AnimatedTexture]({
 })
 contributor_quote_lookup = Dictionary[String, String]({
 "giorgi": "coffee to go",
-"guillaume": "gdd",
+"guillaume": "Someone has to manage it.",
 "inshal": "admiral ackbar",
-"jonas": "no jokes allowed",
-"louis": "one man army",
-"tommaso": "can you hear that?"
+"jonas": "No Jokes please!",
+"louis": "Discover, Understand, Improve!",
+"tommaso": "Can you hear that?"
 })
 arr_enemy_quotes = Array[String](["you will never get here", "try again if you are  brave enough", "didn't expect anything else"])
 
