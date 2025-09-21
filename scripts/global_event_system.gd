@@ -14,9 +14,13 @@ static var remaining_tiles_to_conquer : int   = 0
 signal hovered_tile_changed(tile_pos : Vector2i)
 signal clicked_tile(tile_pos : Vector2i)
 signal conquered_tile(src_tile_pos : Vector2i, dst_tile_pos : Vector2i)
+@warning_ignore("unused_signal") # suppress false positive
 signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
+@warning_ignore("unused_signal") # suppress false positive
 signal remaining_tiles_to_conquer_changed()
+@warning_ignore("unused_signal") # suppress false positive
 signal level_complete()
+@warning_ignore("unused_signal") # suppress false positive
 signal level_failed()
 
 

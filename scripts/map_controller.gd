@@ -235,6 +235,13 @@ func _on_conquered_tile(attack_origin_pos : Vector2i, attack_target_pos : Vector
 	occupation_layer.set_cell(attack_target_pos, faction_source_id, faction_atlas_coords)
 	pass
 
+func set_tiles_as_conquered(tile_coords : Array[Vector2i]):
+	var faction_atlas_coords : Vector2i = occupation_layer.get_cell_atlas_coords(GlobalEventSystem.last_conquered_tile_pos)
+	var faction_source_id    : int      = occupation_layer.get_cell_source_id(GlobalEventSystem.last_conquered_tile_pos)
+	for tile_coord in tile_coords:
+		occupation_layer.set_cell(tile_coord, faction_source_id, faction_atlas_coords)
+	pass
+
 func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	interaction_layer.set_cell(attack_origin_pos, -1)
 	interaction_layer.set_cell(attack_target_pos, -1)

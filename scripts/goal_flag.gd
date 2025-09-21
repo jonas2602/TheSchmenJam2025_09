@@ -4,7 +4,6 @@ extends Node2D
 @onready var flag_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 var _flag_tile_coords    : Vector2i = GlobalEventSystem.invalid_tile_pos
-var _captured_flag_text : String = ""
 
 func _ready() -> void:
 	goal_label.text = "Capture the flag!"
@@ -23,9 +22,10 @@ func _on_tile_conquered(_src_tile_pos : Vector2i, dst_tile_pos : Vector2i):
 	flag_sprite.play("allied")
 	update_flag_text()
 	 
-	# switch to the remaining tile changed event to update the text
-	GlobalEventSystem.conquered_tile.disconnect(_on_tile_conquered)
-	GlobalEventSystem.remaining_tiles_to_conquer_changed.connect(_on_remaining_tiles_to_conquer_changed)
+	# switch to the remaining tile changed event to update the text if the level hasn't been completed
+	if GlobalEventSystem.conquered_tile.is_connected(_on_tile_conquered):
+		GlobalEventSystem.conquered_tile.disconnect(_on_tile_conquered)
+		GlobalEventSystem.remaining_tiles_to_conquer_changed.connect(_on_remaining_tiles_to_conquer_changed)
 	pass
 
 func _on_remaining_tiles_to_conquer_changed():
@@ -38,6 +38,9 @@ func _on_level_complete():
 	goal_label.text = "Area captured!"
 	
 	# disconnect from all events
-	GlobalEventSystem.conquered_tile.disconnect(_on_tile_conquered)
-	GlobalEventSystem.level_complete.disconnect(_on_level_complete)
-	GlobalEventSystem.remaining_tiles_to_conquer_changed.disconnect(_on_remaining_tiles_to_conquer_changed)
+	if GlobalEventSystem.conquered_tile.is_connected(_on_tile_conquered):
+		GlobalEventSystem.conquered_tile.disconnect(_on_tile_conquered)
+	if GlobalEventSystem.level_complete.is_connected(_on_level_complete):
+		GlobalEventSystem.level_complete.disconnect(_on_level_complete)
+	if GlobalEventSystem.remaining_tiles_to_conquer_changed.is_connected(_on_remaining_tiles_to_conquer_changed):
+		GlobalEventSystem.remaining_tiles_to_conquer_changed.disconnect(_on_remaining_tiles_to_conquer_changed)

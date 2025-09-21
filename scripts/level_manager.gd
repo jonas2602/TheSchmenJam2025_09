@@ -15,9 +15,11 @@ var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
 var _max_player_detects_allowed : int = 0
 var _current_player_detects     : int = 0
+var _current_level : int = 0
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
+	GlobalEventSystem.level_complete.connect(_on_level_complete)
 	GlobalEventSystem.player_conquer_stopped.connect(_on_conquer_aborted)
 	
 	_activate_map("menu")
@@ -42,6 +44,10 @@ func _count_occupation_cell(coords : Vector2i) -> void:
 
 func _activate_map(map_name : String) -> void:
 	var level_prefab : Node   = level_lookup.get(map_name)
+	if (level_prefab == null):
+		print("trying to activate unknown map: ", map_name)
+		return
+	
 	var level_offset : Vector2i = main_map._get_coords_for_world_pos(level_prefab.position)
 	
 	# copy terrain over
@@ -69,7 +75,7 @@ func _activate_map(map_name : String) -> void:
 		var new_guard : Node2D = guard.duplicate()
 		guards_root.add_child(new_guard)
 		new_guard.global_transform = global_transform
-		new_guard._initialize_guard(main_map)
+		new_guard._initialize_guard()
 		
 		# guard tiles cannot be conquered so decrement
 		_total_tiles_to_conquer -= 1
@@ -83,6 +89,7 @@ func _activate_map(map_name : String) -> void:
 	
 	print("Tile to win: ", _total_tiles_to_conquer)
 	
+	@warning_ignore("integer_division") # suppress warning here as this is intentional
 	_max_player_detects_allowed = _total_tiles_to_conquer / 10
 	_current_player_detects     = 0
 	print("Detects to loose: ", _max_player_detects_allowed + 1)
@@ -95,6 +102,12 @@ func _activate_map(map_name : String) -> void:
 		add_child(new_flag)
 		new_flag.global_transform = flag_global_transform
 		new_flag.set_flag_tile(occupation_layer.local_to_map(flag_global_transform.get_origin()))
+
+func activate_next_level() -> void:
+	_current_level += 1
+	var map_name : String = "level0" + str(_current_level)
+	_activate_map(map_name)
+	pass
 
 func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	var activate_name : String = main_map._get_cell_activate_name(attack_target_pos)
@@ -123,6 +136,21 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 		GlobalEventSystem.level_complete.emit()
 		pass
 
+func _on_level_complete():
+	var guards : Array[Node] = guards_root.get_children()
+	for guard : Node in guards:
+		var guard_pos : Vector2 = guard.global_position
+		var guard_tile_coord : Vector2i = occupation_layer.local_to_map(guard_pos)
+		# just append here as this list will be cleared afterwards
+		_tiles_to_conquer_list.append(guard_tile_coord)
+		guard.queue_free()
+		
+	main_map.set_tiles_as_conquered(_tiles_to_conquer_list)
+	_tiles_to_conquer_list.clear()
+	_remaining_tiles_to_conquer = 0
+	
+	activate_next_level()
+
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
 	
@@ -132,9 +160,6 @@ func _handle_activation_tile(activate_name : String):
 	
 	if (activate_name.begins_with("map_")):
 		var map_name : String = activate_name.substr(len("map_"))
-		if (level_lookup.get(map_name) == null):
-			print("trying to activate unknown map: ", map_name)
-			return
 			
 		_activate_map(map_name)
 		return
@@ -146,7 +171,7 @@ func _handle_activation_tile(activate_name : String):
 	
 	print("unknown action for: ", activate_name)
 
-func _on_conquer_aborted(attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
+func _on_conquer_aborted(_attack_origin_pos : Vector2i, _attack_target_pos : Vector2i):
 	_current_player_detects += 1
 	print("Detects left: ", _max_player_detects_allowed - _current_player_detects)
 	game_hud._play_random_enemy_quote()
