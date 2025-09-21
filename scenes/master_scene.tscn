@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://chp22ocoa5biv"]
+[gd_scene load_steps=13 format=4 uid="uid://chp22ocoa5biv"]
 
 [ext_resource type="Script" uid="uid://bhv0epkpiyxdf" path="res://scripts/level_manager.gd" id="1_0g0p3"]
 [ext_resource type="PackedScene" uid="uid://4xl7bkywymmj" path="res://prefabs/game_map.tscn" id="1_rn33l"]
@@ -9,13 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://ck6o7ajxtbkv1" path="res://scenes/levels/level_00.tscn" id="4_qrtlt"]
 [ext_resource type="Texture2D" uid="uid://vmk2oswbhdgx" path="res://assets/UI/Title.png" id="5_qx3wq"]
 [ext_resource type="PackedScene" uid="uid://cwi03rtm2hq5t" path="res://prefabs/camera.tscn" id="6_qx3wq"]
+[ext_resource type="PackedScene" uid="uid://cccg62uv01b0y" path="res://scenes/levels/level_01.tscn" id="8_cfg7c"]
+[ext_resource type="PackedScene" uid="uid://bbbajw2o3ihd1" path="res://scenes/levels/level_02.tscn" id="9_j4w6v"]
 [ext_resource type="PackedScene" uid="uid://cbx3ik61j0d5u" path="res://prefabs/hud.tscn" id="13_j4w6v"]
 
 [node name="MasterScene" type="Node2D" node_paths=PackedStringArray("level_lookup")]
 script = ExtResource("1_0g0p3")
 level_lookup = {
+"Level02": NodePath("Level02"),
 "credits": NodePath("LevelCredits"),
 "level00": NodePath("Level00"),
+"level01": NodePath("Level01"),
 "menu": NodePath("LevelMenu")
 }
 
@@ -42,6 +46,14 @@ position = Vector2(900, -600)
 [node name="Level00" parent="." instance=ExtResource("4_qrtlt")]
 visible = false
 position = Vector2(-300, -1500)
+
+[node name="Level01" parent="." instance=ExtResource("8_cfg7c")]
+visible = false
+position = Vector2(-4500, -5700)
+
+[node name="Level02" parent="." instance=ExtResource("9_j4w6v")]
+visible = false
+position = Vector2(-7200, -3300)
 
 [node name="Title" type="Sprite2D" parent="."]
 position = Vector2(1655, -1024)
