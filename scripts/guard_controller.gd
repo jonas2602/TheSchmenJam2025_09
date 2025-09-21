@@ -17,7 +17,7 @@ var game_map : Node2D = null
 var initialized : bool = false
 
 
-func _initialize_guard(main_map : Node2D):
+func _initialize_guard():
 	game_map = get_tree().get_root().find_child("GameMap", true, false)
 	
 	var self_tile_pos : Vector2i = game_map._get_coords_for_world_pos(self.position)
@@ -54,7 +54,7 @@ func _on_timer_timeout():
 	
 	pass
 
-func _on_vision_cone_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_vision_cone_area_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	if (initialized == false):
 		return
 	

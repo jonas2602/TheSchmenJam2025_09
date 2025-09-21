@@ -4,7 +4,6 @@ extends Node2D
 @onready var flag_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 var _flag_tile_coords    : Vector2i = GlobalEventSystem.invalid_tile_pos
-var _captured_flag_text : String = ""
 
 func _ready() -> void:
 	goal_label.text = "Capture the flag!"

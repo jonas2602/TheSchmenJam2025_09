@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://btgofxcobsea2"]
 
 [ext_resource type="Script" uid="uid://dojblajx1dmmc" path="res://scripts/vehicle.gd" id="1_53a1t"]
-[ext_resource type="Texture2D" uid="uid://dqem20ues78gw" path="res://assets/Vehicle_Truck.png" id="1_f87iw"]
+[ext_resource type="Texture2D" uid="uid://d3geowyejbf8v" path="res://assets/Vehicles/Vehicle_Truck.png" id="2_53a1t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f87iw"]
 radius = 48.0
@@ -12,7 +12,7 @@ script = ExtResource("1_53a1t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("1_f87iw")
+texture = ExtResource("2_53a1t")
 
 [node name="Area2D" type="Area2D" parent="."]
 
