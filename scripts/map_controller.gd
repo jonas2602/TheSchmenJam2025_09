@@ -42,7 +42,7 @@ func _get_cell_faction(cell_pos : Vector2i) -> int:
 	var faction_id : int = cell_data.get_custom_data("faction_id")
 	return faction_id
 	
-func _get_cell_complexity(cell_pos : Vector2i) -> int:
+func _get_cell_complexity(cell_pos : Vector2i) -> float:
 	var cell_data : TileData = terrain_feature_layer.get_cell_tile_data(cell_pos)
 	if (cell_data == null):
 		return 1.0 # cell has no special complexity

@@ -7,7 +7,7 @@ extends Node
 
 @onready var face_texture_rect : TextureRect = $DialogBox/FaceSurrounding/Face
 @onready var quote_label : Label = $DialogBox/Panel/Label
-@onready var dialog_box : Node2D = $DialogBox
+@onready var dialog_box : Control = $DialogBox
 
 @onready var _reset_dialog_timer : Timer = $Timer
 
