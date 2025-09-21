@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://chp22ocoa5biv"]
+[gd_scene load_steps=18 format=4 uid="uid://chp22ocoa5biv"]
 
 [ext_resource type="Script" uid="uid://bhv0epkpiyxdf" path="res://scripts/level_manager.gd" id="1_0g0p3"]
 [ext_resource type="PackedScene" uid="uid://4xl7bkywymmj" path="res://prefabs/game_map.tscn" id="1_rn33l"]
@@ -15,7 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://dv4gmvnnath4" path="res://assets/sounds/Menu001.wav" id="12_cfg7c"]
 [ext_resource type="AudioStream" uid="uid://b26mkcfkwus75" path="res://assets/sounds/GameShort001.wav" id="13_dmj67"]
 [ext_resource type="PackedScene" uid="uid://cbx3ik61j0d5u" path="res://prefabs/hud.tscn" id="13_j4w6v"]
-[ext_resource type="AudioStream" uid="uid://c5jcebho3ol2t" path="res://assets/sounds/4-Track.wav" id="16_buf2w"]
+[ext_resource type="AudioStream" uid="uid://u3ku4ubs0veq" path="res://assets/sounds/Victory001.wav" id="16_lwb3v"]
+[ext_resource type="AudioStream" uid="uid://cqqt4vu32d6xb" path="res://assets/sounds/Defeat002.wav" id="17_jm2vo"]
 
 [node name="MasterScene" type="Node2D" node_paths=PackedStringArray("level_lookup")]
 script = ExtResource("1_0g0p3")
@@ -75,6 +76,7 @@ autoplay = true
 script = ExtResource("11_ct1yt")
 main_menu_music = ExtResource("12_cfg7c")
 level_music = ExtResource("13_dmj67")
-level_win_music = ExtResource("16_buf2w")
+level_win_music = ExtResource("16_lwb3v")
+level_lost_music = ExtResource("17_jm2vo")
 
 [editable path="GameMap"]
