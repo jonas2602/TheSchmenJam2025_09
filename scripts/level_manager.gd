@@ -46,11 +46,12 @@ func _count_occupation_cell(coords : Vector2i) -> void:
 	var index : int = _tiles_to_conquer_list.bsearch(coords)
 	_tiles_to_conquer_list.insert(index, coords)
 
-func copy_prefab_node(source_node : Node2D, new_parent_node) -> Node2D:
+func copy_prefab_node(source_node : Node2D, source_map_name : String, new_parent_node) -> Node2D:
 		var global_transform : Transform2D = source_node.get_global_transform()
 		var new_node : Node2D = source_node.duplicate()
 		new_parent_node.add_child(new_node)
 		new_node.global_transform = global_transform
+		new_node.name = source_node.name + "_" + source_map_name
 		return new_node
 
 func _activate_map(map_name : String) -> void:
@@ -90,7 +91,7 @@ func _activate_map(map_name : String) -> void:
 	# spawn guards
 	var prefab_guards_root : Node2D = level_prefab.find_child("Guards", true, false)
 	for guard : Node2D in prefab_guards_root.get_children():
-		var new_guard : Node2D = copy_prefab_node(guard, guards_root)
+		var new_guard : Node2D = copy_prefab_node(guard, map_name, guards_root)
 		new_guard._initialize_guard()
 		
 		# guard tiles cannot be conquered so decrement
@@ -116,7 +117,7 @@ func _activate_map(map_name : String) -> void:
 	
 	# spawn the goal flag if it is not explicitly hidden by th designer
 	if goal_flag.visible:
-		var new_flag : Node2D = copy_prefab_node(goal_flag, self)
+		var new_flag : Node2D = copy_prefab_node(goal_flag, map_name, self)
 		new_flag.set_flag_tile(occupation_layer.local_to_map(new_flag.global_transform.get_origin()))
 		active_level_flag = new_flag
 
