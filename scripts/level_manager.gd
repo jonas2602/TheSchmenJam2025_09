@@ -13,6 +13,7 @@ extends Node
 var active_level_flag : Node2D = null
 
 var _tiles_to_conquer_list      : Array[Vector2i]
+var _total_tiles_conquerable    : int = 0
 var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
 var _max_player_detects_allowed : int = 0
@@ -39,7 +40,7 @@ func _count_occupation_cell(coords : Vector2i) -> void:
 	if faction_id == GlobalEventSystem.faction_id_neutral or faction_id == GlobalEventSystem.faction_id_player:
 		return # tile is not conquerable
 
-	_total_tiles_to_conquer += 1
+	_total_tiles_conquerable += 1
 	
 	# sorted insert into the list
 	var index : int = _tiles_to_conquer_list.bsearch(coords)
@@ -69,6 +70,7 @@ func _activate_map(map_name : String) -> void:
 	var prefab_occupation_layer      : TileMapLayer = level_prefab.find_child(occupation_layer.name, true, false)
 	
 	if (is_gameplay_map):
+		_total_tiles_conquerable = 0
 		_total_tiles_to_conquer = 0
 		_tiles_to_conquer_list.clear()
 	
@@ -93,20 +95,20 @@ func _activate_map(map_name : String) -> void:
 		
 		# guard tiles cannot be conquered so decrement
 		if (is_gameplay_map):
-			_total_tiles_to_conquer -= 1
+			_total_tiles_conquerable -= 1
 			_tiles_to_conquer_list.erase(occupation_layer.local_to_map(new_guard.global_transform.get_origin()))
 	
 	
 	# multiply by the required percentage to get the goal
 	if (is_gameplay_map):
-		_total_tiles_to_conquer = floori(_total_tiles_to_conquer * conquer_tiles_percentage)
+		_total_tiles_to_conquer = floori(_total_tiles_conquerable * conquer_tiles_percentage)
 		_remaining_tiles_to_conquer = _total_tiles_to_conquer
 		GlobalEventSystem.remaining_tiles_to_conquer = _remaining_tiles_to_conquer
 	
 		print("Tile to win: ", _total_tiles_to_conquer)
 	
 	@warning_ignore("integer_division") # suppress warning here as this is intentional
-	_max_player_detects_allowed = _total_tiles_to_conquer / 10 + 1
+	_max_player_detects_allowed = _total_tiles_conquerable / 10 + 1
 	_current_player_detects     = 0
 	print("Detects to lose: ", _max_player_detects_allowed)
 	GlobalEventSystem.remaining_detections = _max_player_detects_allowed
