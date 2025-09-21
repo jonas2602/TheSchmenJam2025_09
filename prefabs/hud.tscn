@@ -117,12 +117,27 @@ grow_vertical = 2
 texture = ExtResource("1_73jnp")
 expand_mode = 1
 
-[node name="DialogBox" type="Node2D" parent="."]
-position = Vector2(697, 1055)
+[node name="DialogBox" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -573.0
+offset_top = -374.0
+offset_right = 531.0
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 0
+border_color = Color(1, 0, 0, 0)
 
 [node name="FaceSurrounding" type="TextureRect" parent="DialogBox"]
-offset_right = 300.0
-offset_bottom = 300.0
+layout_mode = 2
+offset_left = -10.0
+offset_top = -11.0
+offset_right = 290.0
+offset_bottom = 289.0
 mouse_force_pass_scroll_events = false
 texture = ExtResource("2_448xx")
 
@@ -141,9 +156,11 @@ texture = SubResource("AnimatedTexture_mbxvq")
 expand_mode = 1
 
 [node name="Panel" type="Panel" parent="DialogBox"]
-offset_left = 316.0
-offset_right = 1116.0
-offset_bottom = 300.0
+layout_mode = 2
+offset_left = 306.0
+offset_top = -11.0
+offset_right = 1106.0
+offset_bottom = 289.0
 theme = SubResource("Theme_d7ypv")
 
 [node name="Label" type="Label" parent="DialogBox/Panel"]
