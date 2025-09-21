@@ -52,4 +52,4 @@ func _on_level_complete():
 	if GlobalEventSystem.remaining_tiles_to_conquer_changed.is_connected(_on_text_conditions_changed):
 		GlobalEventSystem.remaining_tiles_to_conquer_changed.disconnect(_on_text_conditions_changed)
 	if GlobalEventSystem.remaining_detections_changed.is_connected(_on_text_conditions_changed):
-		GlobalEventSystem.remaining_tiles_to_conquer_changed.disconnect(_on_text_conditions_changed)
+		GlobalEventSystem.remaining_detections_changed.disconnect(_on_text_conditions_changed)
