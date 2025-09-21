@@ -42,11 +42,21 @@ func _count_occupation_cell(coords : Vector2i) -> void:
 	var index : int = _tiles_to_conquer_list.bsearch(coords)
 	_tiles_to_conquer_list.insert(index, coords)
 
+func copy_prefab_node(source_node : Node2D, new_parent_node) -> Node2D:
+		var global_transform : Transform2D = source_node.get_global_transform()
+		var new_node : Node2D = source_node.duplicate()
+		new_parent_node.add_child(new_node)
+		new_node.global_transform = global_transform
+		return new_node
+
 func _activate_map(map_name : String) -> void:
 	var level_prefab : Node   = level_lookup.get(map_name)
 	if (level_prefab == null):
 		print("trying to activate unknown map: ", map_name)
 		return
+	
+	var goal_flag : Node2D = level_prefab.find_child("Flag", true, false)
+	var is_gameplay_map : bool = goal_flag.visible
 	
 	var level_offset : Vector2i = main_map._get_coords_for_world_pos(level_prefab.position)
 	
@@ -55,8 +65,9 @@ func _activate_map(map_name : String) -> void:
 	var prefab_terrain_feature_layer : TileMapLayer = level_prefab.find_child(terrain_feature_layer.name, true, false)
 	var prefab_occupation_layer      : TileMapLayer = level_prefab.find_child(occupation_layer.name, true, false)
 	
-	_total_tiles_to_conquer = 0
-	_tiles_to_conquer_list.clear()
+	if (is_gameplay_map):
+		_total_tiles_to_conquer = 0
+		_tiles_to_conquer_list.clear()
 	
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
 		_copy_cell(prefab_terrain_base_layer, source_coords, terrain_base_layer, source_coords + level_offset)
@@ -66,42 +77,38 @@ func _activate_map(map_name : String) -> void:
 		if (occupation_layer.get_cell_source_id(source_coords + level_offset) != -1):
 			continue # do not change the state of occupation tiles that already exist in the target layer
 		_copy_cell(prefab_occupation_layer, source_coords, occupation_layer, source_coords + level_offset)
-		_count_occupation_cell(source_coords + level_offset)
+		
+		if (is_gameplay_map):
+			_count_occupation_cell(source_coords + level_offset)
 	
 	# spawn guards
 	var prefab_guards_root : Node2D = level_prefab.find_child("Guards", true, false)
 	for guard : Node2D in prefab_guards_root.get_children():
-		var global_transform : Transform2D = guard.get_global_transform()
-		var new_guard : Node2D = guard.duplicate()
-		guards_root.add_child(new_guard)
-		new_guard.global_transform = global_transform
+		var new_guard : Node2D = copy_prefab_node(guard, guards_root)
 		new_guard._initialize_guard()
 		
 		# guard tiles cannot be conquered so decrement
-		_total_tiles_to_conquer -= 1
-		_tiles_to_conquer_list.erase(occupation_layer.local_to_map(global_transform.get_origin()))
+		if (is_gameplay_map):
+			_total_tiles_to_conquer -= 1
+			_tiles_to_conquer_list.erase(occupation_layer.local_to_map(new_guard.global_transform.get_origin()))
 	
 	
 	# multiply by the required percentage to get the goal
-	_total_tiles_to_conquer = floori(_total_tiles_to_conquer * conquer_tiles_percentage)
-	_remaining_tiles_to_conquer = _total_tiles_to_conquer
-	GlobalEventSystem.remaining_tiles_to_conquer = _remaining_tiles_to_conquer
+	if (is_gameplay_map):
+		_total_tiles_to_conquer = floori(_total_tiles_to_conquer * conquer_tiles_percentage)
+		_remaining_tiles_to_conquer = _total_tiles_to_conquer
+		GlobalEventSystem.remaining_tiles_to_conquer = _remaining_tiles_to_conquer
 	
-	print("Tile to win: ", _total_tiles_to_conquer)
+		print("Tile to win: ", _total_tiles_to_conquer)
 	
-	@warning_ignore("integer_division") # suppress warning here as this is intentional
-	_max_player_detects_allowed = _total_tiles_to_conquer / 10
-	_current_player_detects     = 0
-	print("Detects to loose: ", _max_player_detects_allowed + 1)
+		_max_player_detects_allowed = floor(_total_tiles_to_conquer / 10)
+		_current_player_detects     = 0
+		print("Detects to loose: ", _max_player_detects_allowed + 1)
 	
 	# spawn the goal flag if it is not explicitly hidden by th designer
-	var goal_flag : Node2D = level_prefab.find_child("Flag", true, false)
 	if goal_flag.visible:
-		var flag_global_transform : Transform2D = goal_flag.get_global_transform()
-		var new_flag : Node2D = goal_flag.duplicate()
-		add_child(new_flag)
-		new_flag.global_transform = flag_global_transform
-		new_flag.set_flag_tile(occupation_layer.local_to_map(flag_global_transform.get_origin()))
+		var new_flag : Node2D = copy_prefab_node(goal_flag, self)
+		new_flag.set_flag_tile(occupation_layer.local_to_map(new_flag.global_transform.get_origin()))
 
 func activate_next_level() -> void:
 	_current_level += 1
@@ -120,7 +127,7 @@ func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vecto
 func _process_conquered_tile(attack_target_pos : Vector2i):
 	# Check if the tile is within the level bounds
 	var index : int = _tiles_to_conquer_list.bsearch(attack_target_pos)
-	if _tiles_to_conquer_list[index] != attack_target_pos:
+	if index >= _tiles_to_conquer_list.size() || _tiles_to_conquer_list[index] != attack_target_pos:
 		return  # not in list
 	
 	_remaining_tiles_to_conquer -= 1
