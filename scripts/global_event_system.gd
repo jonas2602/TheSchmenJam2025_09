@@ -20,6 +20,8 @@ signal player_conquer_stopped(src_pos : Vector2i, dst_pos : Vector2i)
 @warning_ignore("unused_signal") # suppress false positive
 signal remaining_tiles_to_conquer_changed()
 @warning_ignore("unused_signal") # suppress false positive
+signal game_started()
+@warning_ignore("unused_signal") # suppress false positive
 signal level_complete()
 @warning_ignore("unused_signal") # suppress false positive
 signal level_failed()

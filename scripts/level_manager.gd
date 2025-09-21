@@ -172,6 +172,7 @@ func _handle_activation_tile(activate_name : String):
 		var map_name : String = activate_name.substr(len("map_"))
 			
 		_activate_map(map_name)
+		GlobalEventSystem.game_started.emit()
 		return
 	
 	if (activate_name.begins_with("credit_")):
