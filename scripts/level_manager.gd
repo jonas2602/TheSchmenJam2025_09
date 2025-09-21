@@ -15,6 +15,7 @@ var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
 var _max_player_detects_allowed : int = 0
 var _current_player_detects     : int = 0
+var _current_level : int = 0
 
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
@@ -43,6 +44,10 @@ func _count_occupation_cell(coords : Vector2i) -> void:
 
 func _activate_map(map_name : String) -> void:
 	var level_prefab : Node   = level_lookup.get(map_name)
+	if (level_prefab == null):
+		print("trying to activate unknown map: ", map_name)
+		return
+	
 	var level_offset : Vector2i = main_map._get_coords_for_world_pos(level_prefab.position)
 	
 	# copy terrain over
@@ -98,6 +103,12 @@ func _activate_map(map_name : String) -> void:
 		new_flag.global_transform = flag_global_transform
 		new_flag.set_flag_tile(occupation_layer.local_to_map(flag_global_transform.get_origin()))
 
+func activate_next_level() -> void:
+	_current_level += 1
+	var map_name : String = "level0" + str(_current_level)
+	_activate_map(map_name)
+	pass
+
 func _on_conquered_tile(_attack_origin_pos : Vector2i, attack_target_pos : Vector2i):
 	var activate_name : String = main_map._get_cell_activate_name(attack_target_pos)
 	if (not activate_name.is_empty()):
@@ -138,7 +149,7 @@ func _on_level_complete():
 	_tiles_to_conquer_list.clear()
 	_remaining_tiles_to_conquer = 0
 	
-	# TODO: setup the next level
+	activate_next_level()
 
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
@@ -149,9 +160,6 @@ func _handle_activation_tile(activate_name : String):
 	
 	if (activate_name.begins_with("map_")):
 		var map_name : String = activate_name.substr(len("map_"))
-		if (level_lookup.get(map_name) == null):
-			print("trying to activate unknown map: ", map_name)
-			return
 			
 		_activate_map(map_name)
 		return
