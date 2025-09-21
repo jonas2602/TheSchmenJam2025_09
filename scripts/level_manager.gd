@@ -10,6 +10,8 @@ extends Node
 @onready var main_map              : Node2D       = $GameMap
 @onready var game_hud              : Control      = $Camera/CanvasLayer/Hud
 
+var active_level_flag : Node2D = null
+
 var _tiles_to_conquer_list      : Array[Vector2i]
 var _total_tiles_to_conquer     : int = 0
 var _remaining_tiles_to_conquer : int = 0
@@ -20,6 +22,7 @@ var _current_level : int = 0
 func _ready() -> void:
 	GlobalEventSystem.conquered_tile.connect(_on_conquered_tile)
 	GlobalEventSystem.level_complete.connect(_on_level_complete)
+	GlobalEventSystem.level_failed.connect(_on_level_failed)
 	GlobalEventSystem.player_conquer_stopped.connect(_on_conquer_aborted)
 	
 	_activate_map("menu")
@@ -74,8 +77,9 @@ func _activate_map(map_name : String) -> void:
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
 		_copy_cell(prefab_terrain_feature_layer, source_coords, terrain_feature_layer, source_coords + level_offset)
 	for source_coords : Vector2i in prefab_terrain_base_layer.get_used_cells():
-		if (occupation_layer.get_cell_source_id(source_coords + level_offset) != -1):
-			continue # do not change the state of occupation tiles that already exist in the target layer
+		# NOTE: the following behaviour doesn't work with level resets as we don't know what tiles also exist in other levels
+		# if (occupation_layer.get_cell_source_id(source_coords + level_offset) != -1):
+		# 	continue # do not change the state of occupation tiles that already exist in the target layer
 		_copy_cell(prefab_occupation_layer, source_coords, occupation_layer, source_coords + level_offset)
 		
 		if (is_gameplay_map):
@@ -112,9 +116,15 @@ func _activate_map(map_name : String) -> void:
 	if goal_flag.visible:
 		var new_flag : Node2D = copy_prefab_node(goal_flag, self)
 		new_flag.set_flag_tile(occupation_layer.local_to_map(new_flag.global_transform.get_origin()))
+		active_level_flag = new_flag
 
 func activate_next_level() -> void:
 	_current_level += 1
+	var map_name : String = "level0" + str(_current_level)
+	_activate_map(map_name)
+	pass
+
+func activate_same_level() -> void:
 	var map_name : String = "level0" + str(_current_level)
 	_activate_map(map_name)
 	pass
@@ -146,20 +156,38 @@ func _process_conquered_tile(attack_target_pos : Vector2i):
 		GlobalEventSystem.level_complete.emit()
 		pass
 
+func _delete_guard(guard : Node2D):
+	var guard_pos : Vector2 = guard.global_position
+	var guard_tile_coord : Vector2i = occupation_layer.local_to_map(guard_pos)
+	# just append here as this list will be cleared afterwards
+	main_map._toggle_cell_blocked(guard_tile_coord, false)
+	_tiles_to_conquer_list.append(guard_tile_coord)
+	guard.queue_free()
+
 func _on_level_complete():
-	var guards : Array[Node] = guards_root.get_children()
-	for guard : Node in guards:
-		var guard_pos : Vector2 = guard.global_position
-		var guard_tile_coord : Vector2i = occupation_layer.local_to_map(guard_pos)
-		# just append here as this list will be cleared afterwards
-		_tiles_to_conquer_list.append(guard_tile_coord)
-		guard.queue_free()
-		
+	for guard : Node2D in guards_root.get_children():
+		_delete_guard(guard)
+
+	active_level_flag = null
+
 	main_map.set_tiles_as_conquered(_tiles_to_conquer_list)
 	_tiles_to_conquer_list.clear()
 	_remaining_tiles_to_conquer = 0
 	
 	activate_next_level()
+
+func _on_level_failed():
+	for guard : Node2D in guards_root.get_children():
+		_delete_guard(guard)
+	
+	if (active_level_flag != null):
+		active_level_flag.queue_free()
+		active_level_flag = null
+	
+	_tiles_to_conquer_list.clear()
+	_remaining_tiles_to_conquer = 0
+	
+	activate_same_level()
 
 func _handle_activation_tile(activate_name : String):
 	print("activate: ", activate_name)
@@ -190,6 +218,6 @@ func _on_conquer_aborted(_attack_origin_pos : Vector2i, _attack_target_pos : Vec
 	
 	GlobalEventSystem.remaining_detections_changed.emit()
 	
-	if (GlobalEventSystem.remaining_detections == 0):
+	if (GlobalEventSystem.remaining_detections < 0):
 		print("You lose!")
 		GlobalEventSystem.level_failed.emit()
