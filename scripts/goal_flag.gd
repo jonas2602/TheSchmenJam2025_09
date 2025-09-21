@@ -35,9 +35,9 @@ func _on_text_conditions_changed():
 func update_flag_text():
 	var flag_captured : bool = flag_sprite.animation.begins_with("allied")
 	if (flag_captured):
-		goal_label.text = "Capture the flag!"
-	else:
 		goal_label.text = "Capture " + str(GlobalEventSystem.remaining_tiles_to_conquer) + " more territories!"
+	else:
+		goal_label.text = "Capture the flag!"
 	
 	goal_label.text += "\nDetections remaining: " + str(GlobalEventSystem.remaining_detections)
 
