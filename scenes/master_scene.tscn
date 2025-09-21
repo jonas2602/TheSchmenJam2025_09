@@ -65,6 +65,8 @@ texture = ExtResource("5_qx3wq")
 
 [node name="Camera" parent="." instance=ExtResource("6_qx3wq")]
 position = Vector2(-1615.77, -1727.27)
+zoom = Vector2(0.3, 0.3)
+min_zoom_level = 0.3
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Camera"]
 
