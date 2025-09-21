@@ -36,6 +36,9 @@ func _copy_cell(source_layer : TileMapLayer, source_coords : Vector2i, target_la
 
 func _count_occupation_cell(coords : Vector2i) -> void:
 	var tile_data : TileData = occupation_layer.get_cell_tile_data(coords)
+	if tile_data == null:
+		return
+	
 	var faction_id : int = tile_data.get_custom_data("faction_id")
 	if faction_id == GlobalEventSystem.faction_id_neutral or faction_id == GlobalEventSystem.faction_id_player:
 		return # tile is not conquerable
