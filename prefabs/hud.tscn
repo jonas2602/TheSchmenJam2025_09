@@ -124,12 +124,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -573.0
-offset_top = -374.0
-offset_right = 531.0
-offset_bottom = -84.0
+offset_left = -552.0
+offset_top = -317.9
+offset_right = 552.0
+offset_bottom = -27.9
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.48, 0.48)
+pivot_offset = Vector2(552, 290)
 border_color = Color(1, 0, 0, 0)
 
 [node name="FaceSurrounding" type="TextureRect" parent="DialogBox"]
